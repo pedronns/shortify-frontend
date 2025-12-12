@@ -1,0 +1,92 @@
+const API = import.meta.env.VITE_API_URL
+
+import { useEffect, useState } from "react"
+import { CreateQrCode } from "../api/qrCode"
+import '../App.css'
+
+export default function LinkResult({ link, useQr }) {
+    if (!link) return null
+
+    const [qrCode, setQrCode] = useState(null)
+
+    const shortUrl = `${API}/${link.code}`
+
+    useEffect(() => {
+        async function loadQr() {
+            try {
+                const base64 = await CreateQrCode(
+                    shortUrl,
+                    link.mainColor,
+                    link.secondaryColor
+                )
+
+                setQrCode(base64)
+            } catch (err) {
+                console.log("Erro QR:", err)
+            }
+        }
+
+        loadQr()
+    }, [shortUrl, link.mainColor, link.secondaryColor])
+
+    function copy() {
+        navigator.clipboard.writeText(shortUrl)
+        toggleShowA()
+    }
+
+    return (
+        <div className="spotify-card mt-4 mx-auto">
+            <div className="card-body">
+                <h3 className="card-title text-center mb-3">
+                    Link criado com sucesso!
+                </h3>
+
+                <p className="mb-2">
+                    <strong>Original:</strong> {link.url}
+                </p>
+
+                <p className="mb-2">
+                    <strong>Encurtado:</strong>{" "}
+                    <a href={shortUrl} target="_blank" rel="noreferrer">
+                        {shortUrl}
+                    </a>
+                </p>
+
+                {link.protected && (
+                    <p className="text-primary fw-bold">
+                        Este link está protegido por senha
+                    </p>
+                )}
+
+                {/* QR CODE */}
+                {!qrCode && (
+                    <div className="d-flex justify-content-center my-3">
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only"></span>
+                        </div>
+                    </div>
+                )}
+
+                {useQr && (
+                    <div className="text-center my-3">
+                        <a
+                            href={`data:image/png;base64,${qrCode}`}
+                            download={`qrcode-${link.code}`}
+                            title="Clique para baixar"
+                        >
+                            <img
+                                src={`data:image/png;base64,${qrCode}`}
+                                className="img-fluid"
+                                style={{ maxWidth: "200px" }}
+                            />
+                        </a>
+                    </div>
+                )}
+
+                <button className="btn btn-secondary mt-3" onClick={copy}>
+                    Copiar
+                </button>
+            </div>
+        </div>
+    )
+}

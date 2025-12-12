@@ -1,0 +1,114 @@
+/* 
+   PALETA SPOTIFY-LIKE
+   Fundo escuro:     #121212 / #181818
+   Container:        #181818
+   Input:            #202020
+   Verde primário:   #1db954
+   Verde foco:       #1ed760
+   Cinza texto:      #cccccc
+ */
+
+
+body {
+    background-color: #121212;
+    color: #cccccc;
+}
+
+* {
+    color: inherit;
+}
+
+
+/* CONTAINER */
+.container {
+    background-color: #181818;
+    border: 1px solid #1db95450;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+
+/* INPUTS */
+.form-control {
+    background-color: #202020 !important;
+    color: #ffffff !important;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 10px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control::placeholder {
+    color: #888;
+}
+
+/* Foco do input */
+.form-control:focus {
+    border-color: #1db954;
+    box-shadow: 0 0 0 3px #1db95433;
+}
+
+
+/* SWITCH / CHECKBOX */
+.form-check-input:checked {
+    background-color: #1db954 !important;
+    border-color: #1db954 !important;
+}
+
+
+/* BOTÕES */
+.btn-lg {
+    background-color: #1db954;
+    border-color: #1db954;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-lg:hover {
+    background-color: #1ed760;
+    border-color: #1ed760;
+}
+
+.btn-lg:active {
+    background-color: #158f43 !important;
+    border-color: #1db954 !important;
+    color: white !important;
+}
+
+
+/* CARD - RESULTADO / QR CODE */
+.spotify-card {
+    background-color: #181818;
+    border: 1px solid #1db95450;
+    border-radius: 8px;
+    padding: 24px;
+    width: 50%;
+    box-shadow: 0 0 15px #00000055;
+}
+
+/* Título */
+.spotify-card h3 {
+    color: #fff;
+    text-align: center;
+}
+
+/* Informações */
+.spotify-card p {
+    color: #cccccc;
+}
+
+.text-muted {
+    color: #666 !important
+}
+
+.spotify-card a {
+    color: #1ed760;
+    text-decoration: none;
+}
+
+.spotify-card a:hover {
+    text-decoration: underline;
+}

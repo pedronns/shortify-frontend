@@ -11,7 +11,7 @@ import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
-
+import logo from "../img/logo.png"
 export default function CreateLink() {
     const [url, setUrl] = useState("")
     const [password, setPassword] = useState("")
@@ -95,8 +95,12 @@ export default function CreateLink() {
 
     return (
         <Container className="mt-5 p-4 w-75 rounded-4 shadow-sm text-center">
-            <h1 style={{ color: "#60a5fa" }}>Shortify</h1>
-            <p>Seu encurtador de links</p>
+            <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
+                <img src={logo} alt="logo" style={{ width: "50px" }} />
+                <h1 className="m-0 text-primary">Shortify</h1>
+            </div>
+
+            <p className="text-center">Seu encurtador de links</p>
 
             <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3">

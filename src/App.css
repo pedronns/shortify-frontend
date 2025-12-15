@@ -1,66 +1,90 @@
 /* 
-   PALETA SPOTIFY-LIKE
-   Fundo escuro:     #121212 / #181818
-   Container:        #181818
-   Input:            #202020
-   Verde primário:   #1db954
-   Verde foco:       #1ed760
-   Cinza texto:      #cccccc
+   Fundo:            #121212
+   Superfícies:      #161616
+   Input:            #1f293266
+   Azul primário:    #3b82f6
+   Azul foco:        #2563eb
+   Texto principal:  #cbd5e1
+   Texto fraco:      #94a3b8
+   Borda neutra:     #2a2a2a
  */
-
 
 body {
     background-color: #121212;
-    color: #cccccc;
+    color: #cbd5e1;
 }
 
 * {
     color: inherit;
 }
 
-
-/* CONTAINER */
+/*
+   CONTAINER
+ */
 .container {
-    background-color: #181818;
-    border: 1px solid #1db95450;
+    background-color: #161616;
+    border: 1px solid #2a2a2a;
     border-radius: 8px;
     padding: 24px;
 }
 
+/*
+   TÍTULOS
+ */
+h1 {
+    color: #e5e7eb;
+    font-weight: 600;
+}
 
-/* INPUTS */
+h2, h3 {
+    color: #ffffff;
+}
+
+/* Destaque opcional no título */
+h1 span {
+    color: #3b82f6;
+}
+
+/*
+   INPUTS
+ */
 .form-control {
-    background-color: #202020 !important;
+    background-color: #1f293266 !important;
     color: #ffffff !important;
-    border: 1px solid #333;
+    border: 1px solid #2a2a2a;
     border-radius: 6px;
     padding: 10px 14px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-control::placeholder {
-    color: #888;
+    color: #94a3b8;
 }
 
-/* Foco do input */
 .form-control:focus {
-    border-color: #1db954;
-    box-shadow: 0 0 0 3px #1db95433;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px #2563eb33;
 }
 
+/*
+   SWITCH / CHECKBOX
+ */
+.form-check-input {
+    cursor: pointer;
+}
 
-/* SWITCH / CHECKBOX */
 .form-check-input:checked {
-    background-color: #1db954 !important;
-    border-color: #1db954 !important;
+    background-color: #3b82f6 !important;
+    border-color: #3b82f6 !important;
 }
 
-
-/* BOTÕES */
+/*
+   BOTÕES
+ */
 .btn-lg {
-    background-color: #1db954;
-    border-color: #1db954;
-    color: white;
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
     border-radius: 6px;
     padding: 10px 20px;
     font-weight: 500;
@@ -68,47 +92,55 @@ body {
 }
 
 .btn-lg:hover {
-    background-color: #1ed760;
-    border-color: #1ed760;
+    background-color: #2563eb;
+    border-color: #2563eb;
 }
 
 .btn-lg:active {
-    background-color: #158f43 !important;
-    border-color: #1db954 !important;
-    color: white !important;
+    background-color: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
 }
 
-
-/* CARD - RESULTADO / QR CODE */
+/*
+   CARD / RESULTADO / QR CODE
+ */
 .spotify-card {
-    background-color: #181818;
-    border: 1px solid #1db95450;
+    background-color: #161616;
+    border: 1px solid #2a2a2a;
     border-radius: 8px;
     padding: 24px;
     width: 50%;
     box-shadow: 0 0 15px #00000055;
 }
 
-/* Título */
 .spotify-card h3 {
-    color: #fff;
+    color: #ffffff;
     text-align: center;
 }
 
-/* Informações */
 .spotify-card p {
-    color: #cccccc;
+    color: #cbd5e1;
 }
 
 .text-muted {
-    color: #666 !important
+    color: #94a3b8 !important;
 }
 
 .spotify-card a {
-    color: #1ed760;
+    color: #3b82f6;
     text-decoration: none;
 }
 
 .spotify-card a:hover {
     text-decoration: underline;
+}
+
+/*
+   RESPONSIVIDADE
+ */
+@media (max-width: 768px) {
+    .spotify-card {
+        width: 100%;
+    }
 }

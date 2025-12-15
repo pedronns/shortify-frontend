@@ -95,7 +95,7 @@ export default function CreateLink() {
 
     return (
         <Container className="mt-5 p-4 w-75 rounded-4 shadow-sm text-center">
-            <h1 style={{ color: "#1ed760" }}>Shortify</h1>
+            <h1 style={{ color: "#60a5fa" }}>Shortify</h1>
             <p>Seu encurtador de links</p>
 
             <Form noValidate onSubmit={handleSubmit}>
@@ -129,41 +129,65 @@ export default function CreateLink() {
                     </Col>
                 </Form.Group>
 
-                <div className="d-flex justify-content-center gap-3 mb-3">
-                    <Form.Check
-                        type="switch"
-                        label="Personalizar"
-                        checked={useCode}
-                        onChange={() => {
-                            setUseCode(!useCode)
-                            setValidated(false)
-                        }}
-                    />
+                <div className="d-flex flex-wrap justify-content-center gap-4 mb-3">
+                    <div className="d-flex flex-column align-items-center">
+                        <Form.Check
+                            type="switch"
+                            id="switch-custom"
+                            checked={useCode}
+                            onChange={() => {
+                                setUseCode(!useCode)
+                                setValidated(false)
+                            }}
+                        />
+                        <Form.Label
+                            htmlFor="switch-custom"
+                            className="mt-1 text-center"
+                        >
+                            Personalizar
+                        </Form.Label>
+                    </div>
 
-                    <Form.Check
-                        type="switch"
-                        label="Protegido"
-                        checked={protectedLink}
-                        onChange={() => {
-                            setProtectedLink(!protectedLink)
-                            setValidated(false)
-                        }}
-                    />
+                    <div className="d-flex flex-column align-items-center">
+                        <Form.Check
+                            type="switch"
+                            id="switch-protected"
+                            checked={protectedLink}
+                            onChange={() => {
+                                setProtectedLink(!protectedLink)
+                                setValidated(false)
+                            }}
+                        />
+                        <Form.Label
+                            htmlFor="switch-protected"
+                            className="mt-1 text-center"
+                        >
+                            Protegido
+                        </Form.Label>
+                    </div>
 
-                    <Form.Check
-                        type="switch"
-                        label="QR Code"
-                        checked={useQr}
-                        onChange={() => {
-                            setUseQr(!useQr)
-                            setShowQrOptions(!useQr)
-                            setValidated(false)
-                        }}
-                    />
+                    <div className="d-flex flex-column align-items-center">
+                        <Form.Check
+                            type="switch"
+                            id="switch-qr"
+                            checked={useQr}
+                            onChange={() => {
+                                setUseQr(!useQr)
+                                setShowQrOptions(!useQr)
+                                setValidated(false)
+                            }}
+                        />
+                        <Form.Label
+                            htmlFor="switch-qr"
+                            className="mt-1 text-center"
+                        >
+                            QR Code
+                        </Form.Label>
+                    </div>
                 </div>
 
                 {useCode && (
-                    <Form.Group className="mb-3 w-50 mx-auto">
+                    <Form.Group className="mb-3 col-12 col-md-6 mx-auto">
                         <Form.Control
                             type="text"
                             placeholder="Código customizado"
@@ -184,7 +208,7 @@ export default function CreateLink() {
                 )}
 
                 {protectedLink && (
-                    <Form.Group className="mb-3 w-50 mx-auto">
+                    <Form.Group className="mb-3 col-12 col-md-6 mx-auto">
                         <Form.Control
                             type="password"
                             placeholder="Senha do link"
@@ -205,12 +229,12 @@ export default function CreateLink() {
                 )}
 
                 {showQrOptions && (
-                    <Row className="mb-3 w-50 mx-auto">
-                        <Col sm={6}>
+                    <Row className="mb-3 col-12 col-md-6 mx-auto">
+                        <Col xs={12} sm={6} className="text-center">
                             <Form.Label>Cor principal</Form.Label>
                             <Form.Control
                                 type="color"
-                                className="w-50 mx-auto"
+                                className="w-75 w-sm-50 mx-auto"
                                 value={mainColor}
                                 onChange={(e) => {
                                     setMainColor(e.target.value)
@@ -219,11 +243,11 @@ export default function CreateLink() {
                             />
                         </Col>
 
-                        <Col sm={6}>
+                        <Col xs={12} sm={6} className="text-center">
                             <Form.Label>Cor secundária</Form.Label>
                             <Form.Control
-                                className="w-50 mx-auto"
                                 type="color"
+                                className="w-75 w-sm-50 mx-auto"
                                 value={secondaryColor}
                                 onChange={(e) => {
                                     setSecondaryColor(e.target.value)

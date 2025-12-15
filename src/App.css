@@ -10,7 +10,8 @@
  */
 
 body {
-    background-color: #121212;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #111 0%, #151515 40%, #111 100%);
     color: #cbd5e1;
 }
 
@@ -36,7 +37,8 @@ h1 {
     font-weight: 600;
 }
 
-h2, h3 {
+h2,
+h3 {
     color: #ffffff;
 }
 

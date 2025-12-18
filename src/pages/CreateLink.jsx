@@ -12,6 +12,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import logo from "../img/logo.png"
+
 export default function CreateLink() {
     const [url, setUrl] = useState("")
     const [password, setPassword] = useState("")
@@ -108,7 +109,7 @@ export default function CreateLink() {
                         <Form.Control
                             ref={inputRef}
                             type="text"
-                            placeholder="Insira a URL"
+                            placeholder="https://"
                             value={url}
                             onChange={(e) => {
                                 setUrl(e.target.value)

@@ -1,30 +1,54 @@
-/* 
-   Fundo:            #121212
-   Superfícies:      #161616
-   Input:            #1f293266
-   Azul primário:    #3b82f6
-   Azul foco:        #2563eb
-   Texto principal:  #cbd5e1
-   Texto fraco:      #94a3b8
-   Borda neutra:     #2a2a2a
- */
+:root {
+    /* Base */
+    --bg-main: #121212;
+    --bg-gradient-start: #111111;
+    --bg-gradient-mid: #151515;
+    --bg-gradient-end: #111111;
+
+    /* Superfícies */
+    --surface-primary: #161616;
+    --surface-input: #1f293266;
+
+    /* Bordas */
+    --border-neutral: #2a2a2a;
+
+    /* Cores primárias */
+    --primary: #1D7BFF;
+    --primary-hover: #2563eb;
+    --primary-active: #1d4ed8;
+
+    /* Texto */
+    --text-main: #cbd5e1;
+    --text-strong: #ffffff;
+    --text-title: #e5e7eb;
+    --text-muted: #94a3b8;
+
+    /* Efeitos */
+    --focus-ring: #2563eb33;
+    --shadow-card: #00000055;
+}
 
 body {
     min-height: 100vh;
-    background: linear-gradient(180deg, #111 0%, #151515 40%, #111 100%);
-    color: #cbd5e1;
+    background: linear-gradient(
+        180deg,
+        var(--bg-gradient-start) 0%,
+        var(--bg-gradient-mid) 40%,
+        var(--bg-gradient-end) 100%
+    );
+    color: var(--text-main);
 }
 
 .text-primary {
-    color: #60a5fa !important
+    color: var(--primary) !important;
 }
 
 /*
    CONTAINER
  */
 .container {
-    background-color: #161616;
-    border: 1px solid #2a2a2a;
+    background-color: var(--surface-primary);
+    border: 1px solid var(--border-neutral);
     border-radius: 8px;
     padding: 24px;
 }
@@ -33,39 +57,39 @@ body {
    TÍTULOS
  */
 h1 {
-    color: #e5e7eb;
+    color: var(--text-title);
     font-weight: 600;
 }
 
 h2,
 h3 {
-    color: #ffffff;
+    color: var(--text-strong);
 }
 
 /* Destaque opcional no título */
 h1 span {
-    color: #3b82f6;
+    color: var(--primary);
 }
 
 /*
    INPUTS
  */
 .form-control {
-    background-color: #1f293266 !important;
-    color: #ffffff !important;
-    border: 1px solid #2a2a2a;
+    background-color: var(--surface-input) !important;
+    color: var(--text-strong) !important;
+    border: 1px solid var(--border-neutral);
     border-radius: 6px;
     padding: 10px 14px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-control::placeholder {
-    color: #94a3b8;
+    color: var(--text-muted);
 }
 
 .form-control:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px #2563eb33;
+    border-color: var(--primary-hover);
+    box-shadow: 0 0 0 2px var(--focus-ring);
 }
 
 /*
@@ -76,17 +100,17 @@ h1 span {
 }
 
 .form-check-input:checked {
-    background-color: #3b82f6 !important;
-    border-color: #3b82f6 !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
 }
 
 /*
    BOTÕES
  */
 .btn-lg {
-    background-color: #3b82f6;
-    border-color: #3b82f6;
-    color: #ffffff;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--text-strong);
     border-radius: 6px;
     padding: 10px 20px;
     font-weight: 500;
@@ -94,43 +118,43 @@ h1 span {
 }
 
 .btn-lg:hover {
-    background-color: #2563eb;
-    border-color: #2563eb;
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
 
 .btn-lg:active {
-    background-color: #1d4ed8 !important;
-    border-color: #1d4ed8 !important;
-    color: #ffffff !important;
+    background-color: var(--primary-active) !important;
+    border-color: var(--primary-active) !important;
+    color: var(--text-strong) !important;
 }
 
 /*
    CARD / RESULTADO / QR CODE
  */
 .spotify-card {
-    background-color: #161616;
-    border: 1px solid #2a2a2a;
+    background-color: var(--surface-primary);
+    border: 1px solid var(--border-neutral);
     border-radius: 8px;
     padding: 24px;
     width: 50%;
-    box-shadow: 0 0 15px #00000055;
+    box-shadow: 0 0 15px var(--shadow-card);
 }
 
 .spotify-card h3 {
-    color: #ffffff;
+    color: var(--text-strong);
     text-align: center;
 }
 
 .spotify-card p {
-    color: #cbd5e1;
+    color: var(--text-main);
 }
 
 .text-muted {
-    color: #94a3b8 !important;
+    color: var(--text-muted) !important;
 }
 
 .spotify-card a {
-    color: #3b82f6;
+    color: var(--primary);
     text-decoration: none;
 }
 

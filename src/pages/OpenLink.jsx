@@ -27,7 +27,6 @@ export default function OpenLink() {
                 if (data.protected) {
                     setProtectedLink(true)
                 } else {
-                    // redireciona direto
                     window.location.href = data.url
                 }
             } catch {
@@ -60,7 +59,7 @@ export default function OpenLink() {
                 return
             }
 
-            // Redireciona para a URL original
+            // redireciona para a URL original
             window.location.href = data.url
         } catch {
             setError("Erro de conexão com o servidor")

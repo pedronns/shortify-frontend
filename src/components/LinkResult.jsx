@@ -1,15 +1,16 @@
 const API = import.meta.env.VITE_API_URL
+const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL
 
 import { useEffect, useState } from "react"
 import { CreateQrCode } from "../api/qrCode"
-import '../App.css'
+import "../App.css"
 
 export default function LinkResult({ link, useQr }) {
     if (!link) return null
 
     const [qrCode, setQrCode] = useState(null)
 
-    const shortUrl = `${API}/${link.code}`
+    const shortUrl = `${FRONTEND_URL}/${link.code}`
 
     useEffect(() => {
         async function loadQr() {
@@ -35,13 +36,13 @@ export default function LinkResult({ link, useQr }) {
     }
 
     return (
-        <div className="spotify-card mt-4 mx-auto">
+        <div className="shortify-card mt-4 mx-auto">
             <div className="card-body">
                 <h3 className="card-title text-center mb-3">
                     Link criado com sucesso!
                 </h3>
 
-                <p className="mb-2">
+                <p className="mb-2" style={{ overflow: "hidden" }}>
                     <strong>Original:</strong> {link.url}
                 </p>
 

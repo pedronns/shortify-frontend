@@ -4,7 +4,7 @@ export default function CodeTaken({ code }) {
     if (!code) return null;
 
     return (
-        <div className="spotify-card mt-4 mx-auto text-center">
+        <div className="shortify-card mt-4 mx-auto text-center">
             <h3 className="mb-3" style={{ color: "#f33" }}>
                 Código indisponível
             </h3>

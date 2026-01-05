@@ -40,7 +40,6 @@ export default function OpenLink() {
         fetchLinkInfo()
     }, [code])
 
-    // Tenta desbloquear link protegido
     async function handleUnlock(e) {
         e.preventDefault()
         setError(null)
@@ -70,27 +69,56 @@ export default function OpenLink() {
         }
     }
 
-    if (loading) return <p>Carregando...</p>
-    if (error) return <p style={{ color: "red" }}>{error}</p>
+    if (loading)
+        return (
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Carregando...</span>
+                </div>
+            </div>
+        )
 
     return protectedLink ? (
-        <div>
-            <h1>Link protegido</h1>
-            <p>Digite a senha para acessar o conteúdo.</p>
-            <form onSubmit={handleUnlock}>
-                <input
-                    type="password"
-                    className="form-control mb-3"
-                    placeholder="Senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button disabled={loading} className="btn btn-lg w-100">
-                    {loading ? "Validando..." : "Desbloquear"}
-                </button>
-            </form>
-            {error && <p className="text-danger mt-3">{error}</p>}
+        <div className="d-flex justify-content-center align-items-center min-vh-100">
+            <div
+                className="shortify-card shadow-sm p-4"
+                style={{ maxWidth: 420, width: "100%" }}
+            >
+                <div className="text-center mb-3">
+                    <h1 className="h4 mb-1">Link protegido</h1>
+                    <p className="text-muted mb-0">
+                        Digite a senha para acessar o conteúdo.
+                    </p>
+                </div>
+
+                <form onSubmit={handleUnlock}>
+                    <div className="mb-1">
+                        <input
+                            type="password"
+                            className="form-control"
+                            placeholder="Senha"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            autoFocus
+                            disabled={loading}
+                        />
+                    </div>
+                    {error && (
+                        <p className="text-center text-danger mb-3">
+                            Senha incorreta. Tente novamente.
+                        </p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="btn btn-primary w-100"
+                        disabled={loading}
+                    >
+                        {loading ? "Validando..." : "Desbloquear"}
+                    </button>
+                </form>
+            </div>
         </div>
     ) : null
 }

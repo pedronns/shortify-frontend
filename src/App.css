@@ -131,7 +131,7 @@ h1 span {
 /*
    CARD / RESULTADO / QR CODE
  */
-.spotify-card {
+.shortify-card {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
     border-radius: 8px;
@@ -140,12 +140,12 @@ h1 span {
     box-shadow: 0 0 15px var(--shadow-card);
 }
 
-.spotify-card h3 {
+.shortify-card h3 {
     color: var(--text-strong);
     text-align: center;
 }
 
-.spotify-card p {
+.shortify-card p {
     color: var(--text-main);
 }
 
@@ -153,12 +153,12 @@ h1 span {
     color: var(--text-muted) !important;
 }
 
-.spotify-card a {
+.shortify-card a {
     color: var(--primary);
     text-decoration: none;
 }
 
-.spotify-card a:hover {
+.shortify-card a:hover {
     text-decoration: underline;
 }
 
@@ -166,7 +166,7 @@ h1 span {
    RESPONSIVIDADE
  */
 @media (max-width: 768px) {
-    .spotify-card {
+    .shortify-card {
         width: 100%;
     }
 }

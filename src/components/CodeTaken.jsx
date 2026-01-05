@@ -5,12 +5,12 @@ export default function CodeTaken({ code }) {
 
     return (
         <div className="shortify-card mt-4 mx-auto text-center">
-            <h3 className="mb-3" style={{ color: "#f33" }}>
+            <h3 className="mb-3 text-danger">
                 Código indisponível
             </h3>
 
             <p className="mb-2">
-                O código <strong style={{ color: "#fff" }}>{code}</strong> já está em uso.
+                O código <strong>{code}</strong> já está em uso.
             </p>
 
             <p className="text-muted">
@@ -19,7 +19,6 @@ export default function CodeTaken({ code }) {
 
             <button
                 className="btn-lg mt-3"
-                style={{ backgroundColor: "#1db954", width: "60%" }}
                 onClick={() => window.location.reload()}
             >
                 Tentar outro código

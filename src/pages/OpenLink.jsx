@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import "../App.css"
 
 const API = import.meta.env.VITE_API_URL
 
 export default function OpenLink() {
     const { code } = useParams()
+    const navigate = useNavigate()
     const [password, setPassword] = useState("")
     const [protectedLink, setProtectedLink] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -16,11 +17,15 @@ export default function OpenLink() {
         async function fetchLinkInfo() {
             try {
                 const res = await fetch(`${API}/info/${code}`)
+                if (res.status === 404) {
+                    navigate("/404", { replace: true })
+                    return
+                }
+
                 const data = await res.json()
 
                 if (!res.ok) {
-                    setError(data.error || "Link não encontrado")
-                    setLoading(false)
+                    navigate("/404", { replace: true })
                     return
                 }
 
@@ -30,14 +35,25 @@ export default function OpenLink() {
                     window.location.href = data.url
                 }
             } catch {
-                setError("Erro de conexão com o servidor")
+                navigate("/404", { replace: true })
             } finally {
                 setLoading(false)
             }
         }
 
         fetchLinkInfo()
-    }, [code])
+    }, [code, navigate])
+
+    if (loading)
+        return (
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Carregando...</span>
+                </div>
+            </div>
+        )
+
+    if (!protectedLink) return null
 
     async function handleUnlock(e) {
         e.preventDefault()
@@ -67,15 +83,6 @@ export default function OpenLink() {
             setLoading(false)
         }
     }
-
-    if (loading)
-        return (
-            <div className="d-flex justify-content-center align-items-center min-vh-100">
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Carregando...</span>
-                </div>
-            </div>
-        )
 
     return protectedLink ? (
         <div className="d-flex justify-content-center align-items-center min-vh-100">

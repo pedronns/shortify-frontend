@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import CreateLink from "./pages/CreateLink"
 import OpenLink from "./pages/OpenLink"
+import NotFound from "./pages/NotFound"
 import Footer from "./components/Footer"
 
 export default function App() {
@@ -11,6 +12,8 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<CreateLink />} />
                         <Route path="/:code" element={<OpenLink />} />
+                        <Route path="/404" element={<NotFound />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
 

@@ -14,8 +14,5 @@ async function postLink(data, endpoint) {
     return json
 }
 
-export const getLinkInfo = (code) =>
-    fetch(`${API}/info/${code}`).then((r) => r.json())
-
 export const createRandomLink = (data) => postLink(data, "random")
 export const createCustomLink = (data) => postLink(data, "custom")

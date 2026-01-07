@@ -1,29 +1,23 @@
 :root {
-    /* Base */
     --bg-main: #121212;
     --bg-gradient-start: #111111;
     --bg-gradient-mid: #151515;
     --bg-gradient-end: #111111;
 
-    /* Superfícies */
     --surface-primary: #161616;
     --surface-input: #1f293266;
 
-    /* Bordas */
     --border-neutral: #2a2a2a;
 
-    /* Cores primárias */
-    --primary: #1D7BFF;
+    --primary: #1d7bff;
     --primary-hover: #2563eb;
     --primary-active: #1d4ed8;
 
-    /* Texto */
     --text-main: #cbd5e1;
     --text-strong: #ffffff;
     --text-title: #e5e7eb;
     --text-muted: #94a3b8;
 
-    /* Efeitos */
     --focus-ring: #2563eb33;
     --shadow-card: #00000055;
 }
@@ -43,9 +37,6 @@ body {
     color: var(--primary) !important;
 }
 
-/*
-   CONTAINER
- */
 .container {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
@@ -53,9 +44,6 @@ body {
     padding: 24px;
 }
 
-/*
-   TÍTULOS
- */
 h1 {
     color: var(--text-title);
     font-weight: 600;
@@ -66,21 +54,16 @@ h3 {
     color: var(--text-strong);
 }
 
-/* Destaque opcional no título */
 h1 span {
     color: var(--primary);
 }
 
-/*
-   INPUTS
- */
 .form-control {
     background-color: var(--surface-input) !important;
     color: var(--text-strong) !important;
     border: 1px solid var(--border-neutral);
     border-radius: 6px;
     padding: 10px 14px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-control::placeholder {
@@ -90,11 +73,48 @@ h1 span {
 .form-control:focus {
     border-color: var(--primary-hover);
     box-shadow: 0 0 0 2px var(--focus-ring);
+    outline: none;
+
 }
 
-/*
-   SWITCH / CHECKBOX
- */
+.password-group {
+    background-color: var(--surface-input);
+    border: 1px solid var(--border-neutral);
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.password-group:focus-within {
+    border-color: var(--primary-hover);
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.password-group .form-control:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.password-input {
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--text-strong);
+    border-radius: 6px 0 0 6px;
+}
+
+.eye-toggle {
+    background-color: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.password-group:focus-within .eye-toggle {
+    color: var(--primary);
+}
+
 .form-check-input {
     cursor: pointer;
 }
@@ -104,9 +124,6 @@ h1 span {
     border-color: var(--primary) !important;
 }
 
-/*
-   BOTÕES
- */
 .btn-lg {
     background-color: var(--primary);
     border-color: var(--primary);
@@ -128,9 +145,6 @@ h1 span {
     color: var(--text-strong) !important;
 }
 
-/*
-   CARD / RESULTADO / QR CODE
- */
 .shortify-card {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
@@ -162,9 +176,6 @@ h1 span {
     text-decoration: underline;
 }
 
-/*
-   RESPONSIVIDADE
- */
 @media (max-width: 768px) {
     .shortify-card {
         width: 100%;

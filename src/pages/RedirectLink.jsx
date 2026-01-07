@@ -1,44 +1,42 @@
-import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL
 
 export default function OpenLink() {
-  const { code } = useParams();
-  const navigate = useNavigate();
+    const { code } = useParams()
+    const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!code) {
-      navigate("/");
-      return;
-    }
-
-    async function resolveLink() {
-      try {
-        const res = await fetch(`${API}/${code}`);
-
-        // Se o backend respondeu com redirect (301)
-        if (res.redirected) {
-          window.location.href = res.url;
-          return;
+    useEffect(() => {
+        if (!code) {
+            navigate("/")
+            return
         }
 
-        const data = await res.json();
+        async function resolveLink() {
+            try {
+                const res = await fetch(`${API}/${code}`)
 
-        if (data.protected === true) {
-          navigate(`/unlock/${code}`);
-          return;
+                if (res.redirected) {
+                    window.location.href = res.url
+                    return
+                }
+
+                const data = await res.json()
+
+                if (data.protected === true) {
+                    navigate(`/unlock/${code}`)
+                    return
+                }
+
+                navigate("/")
+            } catch {
+                navigate("/")
+            }
         }
 
-        // fallback
-        navigate("/");
-      } catch {
-        navigate("/");
-      }
-    }
+        resolveLink()
+    }, [code, navigate])
 
-    resolveLink();
-  }, [code, navigate]);
-
-  return null; // não renderiza nada
+    return null
 }

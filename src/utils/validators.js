@@ -8,7 +8,8 @@ export function isValidUrl(str) {
 }
 
 export function isValidCode(code) {
-    return /^[a-zA-Z0-9_-]{6,20}$/.test(code)
+    const passwordRegex = /^[a-zA-Z0-9_-]{6,20}$/
+    return passwordRegex.test(code)
 }
 
 export function isValidPassword(password) {

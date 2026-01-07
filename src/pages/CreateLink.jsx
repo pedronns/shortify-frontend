@@ -1,97 +1,136 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, use } from "react"
+import { FiEye, FiEyeOff } from "react-icons/fi"
+import { Container, Button, Form, InputGroup, Row, Col } from "react-bootstrap"
 import { createRandomLink, createCustomLink } from "../api/links"
-import "../App.css"
-
 import { isValidUrl, isValidCode, isValidPassword } from "../utils/validators"
-
 import LinkResult from "../components/LinkResult"
 import CodeTaken from "../components/CodeTaken"
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Container from "react-bootstrap/Container"
+import "../App.css"
 import logo from "../img/logo.png"
 
 export default function CreateLink() {
-    const [url, setUrl] = useState("")
-    const [password, setPassword] = useState("")
-    const [code, setCode] = useState("")
-    const [result, setResult] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [protectedLink, setProtectedLink] = useState(false)
-    const [useQr, setUseQr] = useState(false)
-    const [mainColor, setMainColor] = useState("#000000")
-    const [secondaryColor, setSecondaryColor] = useState("#ffffff")
-    const [useCode, setUseCode] = useState(false)
-    const [showQrOptions, setShowQrOptions] = useState(false)
-    const [validated, setValidated] = useState(false)
+    const [formState, setFormState] = useState({
+        url: "",
+        password: "",
+        code: "",
+        mainColor: "#000000",
+        secondaryColor: "#ffffff",
+        loading: false,
+        validated: false,
+        result: null,
+        useCode: false,
+        usePassword: false,
+        showPassword: false,
+        useQr: false,
+    })
 
     const inputRef = useRef(null)
 
-    /* useEffect(() => {
-        if (result) setResult(null)
-    }, [useCode, protectedLink, useQr]) */
+    const handleToggle = () => {
+        setFormState((prev) => ({
+            ...prev,
+            showPassword: !prev.showPassword,
+        }))
 
-    async function handleSubmit(e) {
+        setTimeout(() => {
+            inputRef.current?.focus()
+        }, 0)
+    }
+
+    const handleChange = (field) => (e) => {
+        setFormState((prev) => ({
+            ...prev,
+            [field]: e.target.value,
+            validated: false,
+        }))
+    }
+
+    const handleSwitch = (field) => () => {
+        setFormState((prev) => ({
+            ...prev,
+            [field]: !prev[field],
+            validated: false,
+        }))
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setResult(null)
-        setValidated(true)
+        const { url, password, code, usePassword, useCode } = formState
 
-        // Validation checks
-        if (!url.trim()) {
-            setResult({ error: "URL é obrigatória" })
-            return
-        }
-        if (!isValidUrl(url)) {
-            setResult({ error: "URL inválida" })
+        if (!url.trim() || !isValidUrl(url)) {
+            setFormState((prev) => ({
+                ...prev,
+                result: {
+                    error: !url.trim() ? "URL é obrigatória" : "URL inválida",
+                },
+                validated: true,
+            }))
             return
         }
         if (useCode && !code.trim()) {
-            setResult({ error: "Digite o código customizado" })
+            setFormState((prev) => ({
+                ...prev,
+                result: { error: "Digite o código customizado" },
+                validated: true,
+            }))
             return
         }
 
-        setLoading(true)
+        setFormState((prev) => ({ ...prev, loading: true, result: null }))
 
         try {
             const data = await (useCode
                 ? createCustomLink({
                       url,
-                      password: protectedLink ? password : "",
+                      password: usePassword ? password : "",
                       code,
                   })
                 : createRandomLink({
                       url,
-                      password: protectedLink ? password : "",
+                      password: usePassword ? password : "",
                   }))
-
-            setResult({ ...data, mainColor, secondaryColor })
-
-            // Reset fields
-            setUrl("")
-            setPassword("")
-            setCode("")
-            setShowQrOptions(false)
-            setValidated(false)
+            setFormState((prev) => ({
+                ...prev,
+                result: {
+                    ...data,
+                    mainColor: prev.mainColor,
+                    secondaryColor: prev.secondaryColor,
+                },
+                password: "",
+                code: "",
+                validated: false,
+            }))
             inputRef.current.focus()
         } catch (err) {
-            console.log("Erro do backend:", err)
-
-            const backendError = err.error
-            console.log(backendError)
-
-            if (backendError == "CODE_TAKEN") {
-                setResult({ error: "CODE_TAKEN", code })
-                return
-            }
-
-            setResult({
-                error: backendError || "Erro de conexão com o servidor",
-            })
+            const errorMessage =
+                err.error === "CODE_TAKEN"
+                    ? { error: "CODE_TAKEN", code }
+                    : { error: err.error || "Erro de conexão com o servidor" }
+            setFormState((prev) => ({ ...prev, result: errorMessage }))
         } finally {
-            setLoading(false)
+            setFormState((prev) => ({ ...prev, loading: false }))
         }
+    }
+
+    const {
+        url,
+        password,
+        code,
+        mainColor,
+        secondaryColor,
+        result,
+        validated,
+        loading,
+        useCode,
+        usePassword,
+        showPassword,
+        useQr,
+    } = formState
+
+    const checkLabels = {
+        useCode: "Personalizar",
+        usePassword: "Protegido",
+        useQr: "QR Code",
     }
 
     return (
@@ -100,8 +139,7 @@ export default function CreateLink() {
                 <img src={logo} alt="logo" style={{ width: "50px" }} />
                 <h1 className="m-0 text-primary">Shortify</h1>
             </div>
-
-            <p className="text-center">Seu encurtador de links</p>
+            <p>Seu encurtador de links</p>
 
             <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3">
@@ -111,10 +149,7 @@ export default function CreateLink() {
                             type="text"
                             placeholder="https://"
                             value={url}
-                            onChange={(e) => {
-                                setUrl(e.target.value)
-                                setValidated(false)
-                            }}
+                            onChange={handleChange("url")}
                             autoFocus
                             required
                             isValid={
@@ -123,72 +158,31 @@ export default function CreateLink() {
                                 url.trim() !== ""
                             }
                             isInvalid={
-                                validated &&
-                                (url.trim() === "" || !isValidUrl(url))
+                                validated && (!url.trim() || !isValidUrl(url))
                             }
                         />
-
                         <Form.Control.Feedback type="invalid">
-                            Informe uma URL válida com http:// ou https://.
+                            Informe uma URL válida com http:// ou https://
                         </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
 
                 <div className="d-flex flex-wrap justify-content-center gap-4 mb-3">
-                    <div className="d-flex flex-column align-items-center">
-                        <Form.Check
-                            type="switch"
-                            id="switch-custom"
-                            checked={useCode}
-                            onChange={() => {
-                                setUseCode(!useCode)
-                                setValidated(false)
-                            }}
-                        />
-                        <Form.Label
-                            htmlFor="switch-custom"
-                            className="mt-1 text-center"
+                    {["useCode", "usePassword", "useQr"].map((field) => (
+                        <div
+                            className="d-flex flex-column align-items-center"
+                            key={field}
                         >
-                            Personalizar
-                        </Form.Label>
-                    </div>
-
-                    <div className="d-flex flex-column align-items-center">
-                        <Form.Check
-                            type="switch"
-                            id="switch-protected"
-                            checked={protectedLink}
-                            onChange={() => {
-                                setProtectedLink(!protectedLink)
-                                setValidated(false)
-                            }}
-                        />
-                        <Form.Label
-                            htmlFor="switch-protected"
-                            className="mt-1 text-center"
-                        >
-                            Protegido
-                        </Form.Label>
-                    </div>
-
-                    <div className="d-flex flex-column align-items-center">
-                        <Form.Check
-                            type="switch"
-                            id="switch-qr"
-                            checked={useQr}
-                            onChange={() => {
-                                setUseQr(!useQr)
-                                setShowQrOptions(!useQr)
-                                setValidated(false)
-                            }}
-                        />
-                        <Form.Label
-                            htmlFor="switch-qr"
-                            className="mt-1 text-center"
-                        >
-                            QR Code
-                        </Form.Label>
-                    </div>
+                            <Form.Check
+                                type="switch"
+                                checked={formState[field]}
+                                onChange={handleSwitch(field)}
+                            />
+                            <Form.Label className="mt-1 text-center">
+                                {checkLabels[field]}
+                            </Form.Label>
+                        </div>
+                    ))}
                 </div>
 
                 {useCode && (
@@ -197,10 +191,7 @@ export default function CreateLink() {
                             type="text"
                             placeholder="Código customizado"
                             value={code}
-                            onChange={(e) => {
-                                setCode(e.target.value)
-                                setValidated(false)
-                            }}
+                            onChange={handleChange("code")}
                             required
                             isInvalid={validated && !isValidCode(code)}
                             isValid={validated && isValidCode(code)}
@@ -212,54 +203,58 @@ export default function CreateLink() {
                     </Form.Group>
                 )}
 
-                {protectedLink && (
+                {usePassword && (
                     <Form.Group className="mb-3 col-12 col-md-6 mx-auto">
-                        <Form.Control
-                            type="password"
-                            placeholder="Senha do link"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value)
-                                setValidated(false)
-                            }}
-                            required
-                            isInvalid={validated && !isValidPassword(password)}
-                            isValid={validated && isValidPassword(password)}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Use 8-50 caracteres, com maiúsculas, minúsculas,
-                            número e símbolo.
-                        </Form.Control.Feedback>
+                        <InputGroup className="password-group">
+                            <Form.Control
+                                className="password-input"
+                                placeholder="Senha do link"
+                                ref={inputRef}
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={handleChange("password")}
+                            />
+
+                            <InputGroup.Text
+                                className="eye-toggle"
+                                onClick={handleToggle}
+                                role="button"
+                            >
+                                {showPassword ? <FiEye /> : <FiEyeOff />}
+                            </InputGroup.Text>
+                        </InputGroup>
                     </Form.Group>
                 )}
 
-                {showQrOptions && (
+                {useQr && (
                     <Row className="mb-3 col-12 col-md-6 mx-auto">
-                        <Col xs={12} sm={6} className="text-center">
-                            <Form.Label>Cor principal</Form.Label>
-                            <Form.Control
-                                type="color"
-                                className="w-75 w-sm-50 mx-auto"
-                                value={mainColor}
-                                onChange={(e) => {
-                                    setMainColor(e.target.value)
-                                    setValidated(false)
-                                }}
-                            />
-                        </Col>
-
-                        <Col xs={12} sm={6} className="text-center">
-                            <Form.Label>Cor secundária</Form.Label>
-                            <Form.Control
-                                type="color"
-                                className="w-75 w-sm-50 mx-auto"
-                                value={secondaryColor}
-                                onChange={(e) => {
-                                    setSecondaryColor(e.target.value)
-                                    setValidated(false)
-                                }}
-                            />
-                        </Col>
+                        {[
+                            {
+                                label: "Cor principal",
+                                value: mainColor,
+                                setter: "mainColor",
+                            },
+                            {
+                                label: "Cor secundária",
+                                value: secondaryColor,
+                                setter: "secondaryColor",
+                            },
+                        ].map(({ label, value, setter }) => (
+                            <Col
+                                xs={12}
+                                sm={6}
+                                className="text-center"
+                                key={setter}
+                            >
+                                <Form.Label>{label}</Form.Label>
+                                <Form.Control
+                                    type="color"
+                                    className="w-75 w-sm-50 mx-auto"
+                                    value={value}
+                                    onChange={handleChange(setter)}
+                                />
+                            </Col>
+                        ))}
                     </Row>
                 )}
 
@@ -269,7 +264,6 @@ export default function CreateLink() {
             </Form>
 
             {result?.error === "CODE_TAKEN" && <CodeTaken code={result.code} />}
-
             {result && !result.error && (
                 <LinkResult link={result} useQr={useQr} />
             )}

@@ -2,7 +2,7 @@ const API = import.meta.env.VITE_API_URL
 const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL
 
 import { useEffect, useState } from "react"
-import { CreateQrCode } from "../api/qrCode"
+import { createQrCode } from "../api/qrCode"
 import "../App.css"
 
 export default function LinkResult({ link, useQr }) {
@@ -13,26 +13,45 @@ export default function LinkResult({ link, useQr }) {
     const shortUrl = `${FRONTEND_URL}/${link.code}`
 
     useEffect(() => {
+        if (!shortUrl || !link.mainColor || !link.secondaryColor) {
+            return
+        }
+
+        const controller = new AbortController()
+
         async function loadQr() {
             try {
-                const base64 = await CreateQrCode(
+                const base64 = await createQrCode(
                     shortUrl,
                     link.mainColor,
-                    link.secondaryColor
+                    link.secondaryColor,
+                    { signal: controller.signal }
                 )
 
                 setQrCode(base64)
             } catch (err) {
-                console.log("Erro QR:", err)
+                if (err.name === "AbortError") {
+                    return
+                }
+
+                console.error("Erro ao gerar QR Code", {
+                    shortUrl,
+                    mainColor: link.mainColor,
+                    secondaryColor: link.secondaryColor,
+                    error: err,
+                })
             }
         }
 
         loadQr()
+
+        return () => {
+            controller.abort()
+        }
     }, [shortUrl, link.mainColor, link.secondaryColor])
 
     function copy() {
         navigator.clipboard.writeText(shortUrl)
-        toggleShowA()
     }
 
     return (

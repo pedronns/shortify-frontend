@@ -1,4 +1,6 @@
-export async function CreateQrCode(str, main, secondary) {
+export async function createQrCode(str, main, secondary, options = {}) {
+    const { signal } = options
+
     const cleanedMain = main.startsWith("#") ? main.slice(1) : main
     const cleanedSecondary = secondary.startsWith("#")
         ? secondary.slice(1)
@@ -8,7 +10,7 @@ export async function CreateQrCode(str, main, secondary) {
         str
     )}&dark=${cleanedMain}&light=${cleanedSecondary}&format=base64`
 
-    const res = await fetch(url)
+    const res = await fetch(url, { signal })
 
     if (!res.ok) {
         const errorMessage = await res.text()

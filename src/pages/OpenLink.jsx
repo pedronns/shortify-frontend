@@ -12,28 +12,16 @@ export default function OpenLink() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    // Checks if the link exists and if it's protected
     useEffect(() => {
-        async function fetchLinkInfo() {
+        const fetchLinkInfo = async () => {
             try {
                 const res = await fetch(`${API}/info/${code}`)
-                if (res.status === 404) {
-                    navigate("/404", { replace: true })
-                    return
-                }
+                if (!res.ok) throw new Error("Link not found")
 
                 const data = await res.json()
-
-                if (!res.ok) {
-                    navigate("/404", { replace: true })
-                    return
-                }
-
-                if (data.protected) {
-                    setProtectedLink(true)
-                } else {
-                    window.location.href = data.url
-                }
+                data.protected
+                    ? setProtectedLink(true)
+                    : (window.location.href = data.url)
             } catch {
                 navigate("/404", { replace: true })
             } finally {
@@ -44,7 +32,7 @@ export default function OpenLink() {
         fetchLinkInfo()
     }, [code, navigate])
 
-    if (loading)
+    if (loading) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-100">
                 <div className="spinner-border text-primary" role="status">
@@ -52,10 +40,9 @@ export default function OpenLink() {
                 </div>
             </div>
         )
+    }
 
-    if (!protectedLink) return null
-
-    async function handleUnlock(e) {
+    const handleUnlock = async (e) => {
         e.preventDefault()
         setError(null)
         setLoading(true)
@@ -66,25 +53,20 @@ export default function OpenLink() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ password }),
             })
-
             const data = await res.json()
+            if (!res.ok) throw new Error(data.error || "Senha incorreta")
 
-            if (!res.ok) {
-                setError(data.error || "Senha incorreta")
-                setLoading(false)
-                return
-            }
-
-            // redireciona para a URL original
             window.location.href = data.url
-        } catch {
-            setError("Erro de conexão com o servidor")
+        } catch (err) {
+            setError(err.message || "Erro de conexão com o servidor")
         } finally {
             setLoading(false)
         }
     }
 
-    return protectedLink ? (
+    if (!protectedLink) return null
+
+    return (
         <div className="d-flex justify-content-center align-items-center min-vh-100">
             <div
                 className="shortify-card shadow-sm p-4"
@@ -96,7 +78,6 @@ export default function OpenLink() {
                         Digite a senha para acessar o conteúdo.
                     </p>
                 </div>
-
                 <form onSubmit={handleUnlock}>
                     <div className="mb-1">
                         <input
@@ -111,11 +92,8 @@ export default function OpenLink() {
                         />
                     </div>
                     {error && (
-                        <p className="text-center text-danger mb-3">
-                            Senha incorreta. Tente novamente.
-                        </p>
+                        <p className="text-center text-danger mb-3">{error}</p>
                     )}
-
                     <button
                         type="submit"
                         className="btn btn-primary w-100"
@@ -126,5 +104,5 @@ export default function OpenLink() {
                 </form>
             </div>
         </div>
-    ) : null
+    )
 }

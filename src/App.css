@@ -1,29 +1,27 @@
 :root {
     --bg-main: #121212;
-    --bg-gradient-start: #111111;
+    --bg-gradient-start: #111;
     --bg-gradient-mid: #151515;
-    --bg-gradient-end: #111111;
+    --bg-gradient-end: #111;
 
-    --surface-primary: #161616;
+    --surface-card: #161616;
     --surface-input: #181a1c;
 
-    --border-neutral: #2a2a2a;
+    --border-default: #2a2a2a;
+    --border-error: #dc3545;
 
     --primary: #1d7bff;
     --primary-hover: #2563eb;
     --primary-active: #1d4ed8;
 
     --text-main: #cbd5e1;
-    --text-strong: #ffffff;
+    --text-strong: #fff;
     --text-title: #e5e7eb;
     --text-muted: #94a3b8;
 
     --focus-ring: #2563eb25;
-    --invalid-ring: #dc354540;
-    --shadow-card: #000000;
-
-    --border-invalid: #dc3545;
-    --primary-active: #1d4ed8;
+    --error-ring: #dc354540;
+    --shadow-card: #000;
 }
 
 body {
@@ -37,15 +35,15 @@ body {
     color: var(--text-main);
 }
 
-.text-primary {
-    color: var(--primary) !important;
+.container {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-default);
+    border-radius: 4rem;
+    box-shadow: 0 0 5px 0.25rem var(--bg-main);
 }
 
-.container {
-    background-color: var(--surface-primary);
-    border: 1px solid var(--border-neutral);
-    border-radius: 8px;
-    padding: 24px;
+.text-primary {
+    color: var(--primary) !important;
 }
 
 h1 {
@@ -63,11 +61,11 @@ h1 span {
 }
 
 .form-control {
-    background-color: var(--surface-input) !important;
-    color: var(--text-strong) !important;
-    border: 1px solid var(--border-neutral);
-    border-radius: 6px;
     padding: 10px 14px;
+    background-color: var(--surface-input) !important;
+    border: 1px solid var(--border-default);
+    border-radius: 6px;
+    color: var(--text-strong) !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -77,7 +75,7 @@ h1 span {
 
 .form-control:focus {
     border-color: var(--primary-hover);
-    box-shadow: 0 0 0 2px var(--focus-ring);
+    box-shadow: 0 0 5px 0.25rem var(--focus-ring);
     outline: none;
 }
 
@@ -89,46 +87,56 @@ h1 span {
     display: flex;
     align-items: center;
     background-color: var(--surface-input);
-    border: 1px solid var(--border-neutral);
+    border: 1px solid var(--border-default);
     border-radius: 6px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .password-input {
     flex: 1;
-    border: none;
-    outline: none;
-    background-color: var(--surface-input);
-    color: var(--text-strong);
     padding: 10px 14px;
+    background-color: var(--surface-input);
+    outline: none;
+    border: none;
     border-radius: 6px 0 0 6px;
+    color: var(--text-strong);
 }
 
-.password-group:focus-within {
-    border: 1px solid var(--primary-hover);
-    box-shadow: 0 0 0 2px var(--focus-ring);
+.password-group.invalid {
+    border: 1px solid var(--border-error);
 }
 
 .eye-toggle {
-    padding: 0 12px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    color: var(--text-muted);
-    border-left: 1px solid var(--border-neutral);
+    padding: 0 12px;
     border-radius: 0 6px 6px 0;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: 1s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.eye-toggle:hover {
+    color: var(--text-strong);
+    transform: translate(0, -1px);
 }
 
 .feedback-invalid {
-    color: #dc3545;
+    color: var(--border-error);
     font-size: 0.875rem;
     margin-top: 4px;
     text-align: center;
 }
 
+.password-group:focus-within {
+    border: 1px solid var(--primary-active);
+    box-shadow: 0 0 5px 0.25rem var(--focus-ring);
+}
+
 .password-group.invalid:focus-within {
-    border-color: var(--border-invalid);
-    box-shadow: 0 0 0 2px var(--invalid-ring);
+    border-color: var(--border-error);
+    box-shadow: 0 0 5px 0.25rem var(--error-ring);
 }
 
 .form-check-input {
@@ -162,8 +170,8 @@ h1 span {
 }
 
 .shortify-card {
-    background-color: var(--surface-primary);
-    border: 1px solid var(--border-neutral);
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-default);
     border-radius: 8px;
     padding: 24px;
     width: 50%;

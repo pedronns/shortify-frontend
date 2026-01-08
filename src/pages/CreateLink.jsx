@@ -134,7 +134,7 @@ export default function CreateLink() {
     }
 
     return (
-        <Container className="mt-5 p-4 w-75 rounded-4 shadow-sm text-center">
+        <Container className="mt-5 p-4 w-75 text-center ">
             <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
                 <img src={logo} alt="logo" style={{ width: "50px" }} />
                 <h1 className="m-0 text-primary">Shortify</h1>

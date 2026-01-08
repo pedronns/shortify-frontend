@@ -204,8 +204,16 @@ export default function CreateLink() {
                 )}
 
                 {usePassword && (
-                    <Form.Group className="mb-3 col-12 col-md-6 mx-auto">
-                        <InputGroup className="password-group">
+                    <Form.Group className="mb-3 col-12 col-md-6 mx-auto password-wrapper">
+                        {/* usual Feedback component doesn't work here
+                         due to the way the password group is structured */}
+                        <div
+                            className={`password-group ${
+                                validated && !isValidPassword(password)
+                                    ? "invalid"
+                                    : ""
+                            }`}
+                        >
                             <Form.Control
                                 className="password-input"
                                 placeholder="Senha do link"
@@ -213,16 +221,23 @@ export default function CreateLink() {
                                 type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={handleChange("password")}
+                                required
                             />
-
-                            <InputGroup.Text
+                            {/* If done the normal way, The Feedback component doesn't come up */}
+                            <div
                                 className="eye-toggle"
                                 onClick={handleToggle}
                                 role="button"
-                            >
+                                >
                                 {showPassword ? <FiEye /> : <FiEyeOff />}
-                            </InputGroup.Text>
-                        </InputGroup>
+                            </div>
+                        </div>
+
+                        {validated && !isValidPassword(password) && (
+                            <div className="feedback-invalid">
+                                A senha deve ter entre 8 e 50 caracteres.
+                            </div>
+                        )}
                     </Form.Group>
                 )}
 

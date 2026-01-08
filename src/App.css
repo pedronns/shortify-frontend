@@ -1,11 +1,12 @@
 :root {
+    /* Base */
     --bg-main: #121212;
     --bg-gradient-start: #111111;
     --bg-gradient-mid: #151515;
     --bg-gradient-end: #111111;
 
     --surface-primary: #161616;
-    --surface-input: #1f293266;
+    --surface-input: #181A1C;
 
     --border-neutral: #2a2a2a;
 
@@ -18,10 +19,13 @@
     --text-title: #e5e7eb;
     --text-muted: #94a3b8;
 
-    --focus-ring: #2563eb33;
-    --shadow-card: #00000055;
+    --focus-ring: #2563eb25;
+    --shadow-card: #000000;
+
+    --border-invalid: #dc3545;
 }
 
+/* BODY */
 body {
     min-height: 100vh;
     background: linear-gradient(
@@ -37,6 +41,7 @@ body {
     color: var(--primary) !important;
 }
 
+/* CONTAINER */
 .container {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
@@ -44,6 +49,7 @@ body {
     padding: 24px;
 }
 
+/* TITULOS */
 h1 {
     color: var(--text-title);
     font-weight: 600;
@@ -58,12 +64,14 @@ h1 span {
     color: var(--primary);
 }
 
+/* INPUTS */
 .form-control {
     background-color: var(--surface-input) !important;
     color: var(--text-strong) !important;
     border: 1px solid var(--border-neutral);
     border-radius: 6px;
     padding: 10px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-control::placeholder {
@@ -74,14 +82,47 @@ h1 span {
     border-color: var(--primary-hover);
     box-shadow: 0 0 0 2px var(--focus-ring);
     outline: none;
+}
 
+/* PASSWORD GROUP */
+
+.password-wrapper {
+    position: relative;
 }
 
 .password-group {
+    display: flex;
+    align-items: center;
     background-color: var(--surface-input);
     border: 1px solid var(--border-neutral);
     border-radius: 6px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.password-group.invalid {
+    border-color: #dc3545;
+}
+
+.password-input {
+    flex: 1;
+    border: none;
+    color: var(--text-strong);
+    padding: 10px 14px;
+    border-radius: 6px 0 0 6px;
+}
+
+.password-input:focus {
+    outline: none;
+}
+
+.eye-toggle {
+    padding: 0 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    border-left: 1px solid var(--border-neutral);
+    border-radius: 0 6px 6px 0;
 }
 
 .password-group:focus-within {
@@ -89,32 +130,15 @@ h1 span {
     box-shadow: 0 0 0 2px var(--focus-ring);
 }
 
-.password-group .form-control:focus {
-    border-color: transparent !important;
-    box-shadow: none !important;
+.feedback-invalid {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 4px;
+    text-align: center;
 }
 
-.password-input {
-    background-color: transparent !important;
-    border: none !important;
-    color: var(--text-strong);
-    border-radius: 6px 0 0 6px;
-}
 
-.eye-toggle {
-    background-color: transparent;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-}
-
-.password-group:focus-within .eye-toggle {
-    color: var(--primary);
-}
-
+/* SWITCH / CHECKBOX */
 .form-check-input {
     cursor: pointer;
 }
@@ -124,6 +148,7 @@ h1 span {
     border-color: var(--primary) !important;
 }
 
+/* BOTÕES */
 .btn-lg {
     background-color: var(--primary);
     border-color: var(--primary);
@@ -145,6 +170,7 @@ h1 span {
     color: var(--text-strong) !important;
 }
 
+/* CARD / RESULTADO / QR CODE */
 .shortify-card {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
@@ -176,6 +202,7 @@ h1 span {
     text-decoration: underline;
 }
 
+/* RESPONSIVIDADE */
 @media (max-width: 768px) {
     .shortify-card {
         width: 100%;

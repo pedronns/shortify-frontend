@@ -214,7 +214,7 @@ export default function CreateLink() {
                                     : ""
                             }`}
                         >
-                            <Form.Control
+                            <input
                                 className="password-input"
                                 placeholder="Senha do link"
                                 ref={inputRef}

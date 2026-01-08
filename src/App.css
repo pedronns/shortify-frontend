@@ -1,12 +1,11 @@
 :root {
-    /* Base */
     --bg-main: #121212;
     --bg-gradient-start: #111111;
     --bg-gradient-mid: #151515;
     --bg-gradient-end: #111111;
 
     --surface-primary: #161616;
-    --surface-input: #181A1C;
+    --surface-input: #181a1c;
 
     --border-neutral: #2a2a2a;
 
@@ -20,12 +19,13 @@
     --text-muted: #94a3b8;
 
     --focus-ring: #2563eb25;
+    --invalid-ring: #dc354540;
     --shadow-card: #000000;
 
     --border-invalid: #dc3545;
+    --primary-active: #1d4ed8;
 }
 
-/* BODY */
 body {
     min-height: 100vh;
     background: linear-gradient(
@@ -41,7 +41,6 @@ body {
     color: var(--primary) !important;
 }
 
-/* CONTAINER */
 .container {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
@@ -49,7 +48,6 @@ body {
     padding: 24px;
 }
 
-/* TITULOS */
 h1 {
     color: var(--text-title);
     font-weight: 600;
@@ -64,7 +62,6 @@ h1 span {
     color: var(--primary);
 }
 
-/* INPUTS */
 .form-control {
     background-color: var(--surface-input) !important;
     color: var(--text-strong) !important;
@@ -84,8 +81,6 @@ h1 span {
     outline: none;
 }
 
-/* PASSWORD GROUP */
-
 .password-wrapper {
     position: relative;
 }
@@ -99,20 +94,19 @@ h1 span {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.password-group.invalid {
-    border-color: #dc3545;
-}
-
 .password-input {
     flex: 1;
     border: none;
+    outline: none;
+    background-color: var(--surface-input);
     color: var(--text-strong);
     padding: 10px 14px;
     border-radius: 6px 0 0 6px;
 }
 
-.password-input:focus {
-    outline: none;
+.password-group:focus-within {
+    border: 1px solid var(--primary-hover);
+    box-shadow: 0 0 0 2px var(--focus-ring);
 }
 
 .eye-toggle {
@@ -125,11 +119,6 @@ h1 span {
     border-radius: 0 6px 6px 0;
 }
 
-.password-group:focus-within {
-    border-color: var(--primary-hover);
-    box-shadow: 0 0 0 2px var(--focus-ring);
-}
-
 .feedback-invalid {
     color: #dc3545;
     font-size: 0.875rem;
@@ -137,8 +126,11 @@ h1 span {
     text-align: center;
 }
 
+.password-group.invalid:focus-within {
+    border-color: var(--border-invalid);
+    box-shadow: 0 0 0 2px var(--invalid-ring);
+}
 
-/* SWITCH / CHECKBOX */
 .form-check-input {
     cursor: pointer;
 }
@@ -148,7 +140,6 @@ h1 span {
     border-color: var(--primary) !important;
 }
 
-/* BOTÕES */
 .btn-lg {
     background-color: var(--primary);
     border-color: var(--primary);
@@ -170,7 +161,6 @@ h1 span {
     color: var(--text-strong) !important;
 }
 
-/* CARD / RESULTADO / QR CODE */
 .shortify-card {
     background-color: var(--surface-primary);
     border: 1px solid var(--border-neutral);
@@ -202,7 +192,6 @@ h1 span {
     text-decoration: underline;
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 768px) {
     .shortify-card {
         width: 100%;

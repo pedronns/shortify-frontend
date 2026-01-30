@@ -130,7 +130,7 @@ export default function CreateLink() {
 							info="O endereço completo do site que será encurtado."
 							feedback={
 								validated && !isValidPassword(password)
-									? "Insira uma URL com https:// ou http://"
+									? "Insira uma URL válida"
 									: null
 							}
 						>

@@ -1,16 +1,21 @@
-const API = import.meta.env.VITE_API_URL
 const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL
+
+import Button from "react-bootstrap/Button"
+import Modal from "react-bootstrap/Modal"
+import Toast from "react-bootstrap/Toast"
 
 import { useEffect, useState } from "react"
 import { createQrCode } from "../api/qrCode"
+
 import "../App.css"
 
-export default function LinkResult({ link, useQr }) {
-    if (!link) return null
-
-    const [qrCode, setQrCode] = useState(null)
+const ResultModal = ({ link, useQr, onClose, error }) => {
+    if (!link || error) return null
 
     const shortUrl = `${FRONTEND_URL}/${link.code}`
+
+    const [qrCode, setQrCode] = useState(null)
+    const [showToast, setShowToast] = useState(false)
 
     useEffect(() => {
         if (!shortUrl || !link.mainColor || !link.secondaryColor) {
@@ -25,7 +30,7 @@ export default function LinkResult({ link, useQr }) {
                     shortUrl,
                     link.mainColor,
                     link.secondaryColor,
-                    { signal: controller.signal }
+                    { signal: controller.signal },
                 )
 
                 setQrCode(base64)
@@ -52,15 +57,16 @@ export default function LinkResult({ link, useQr }) {
 
     function copy() {
         navigator.clipboard.writeText(shortUrl)
+        setShowToast(true)
     }
 
     return (
-        <div className="shortify-card mt-4 mx-auto">
-            <div className="card-body">
-                <h3 className="card-title text-center mb-3">
-                    Link criado com sucesso!
-                </h3>
+        <Modal show centered onHide={onClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Link criado com sucesso!</Modal.Title>
+            </Modal.Header>
 
+            <Modal.Body className="text-center">
                 <p className="mb-2" style={{ overflow: "hidden" }}>
                     <strong>Original:</strong> {link.url}
                 </p>
@@ -78,7 +84,7 @@ export default function LinkResult({ link, useQr }) {
                     </p>
                 )}
 
-                {(!qrCode && useQr) && (
+                {!qrCode && useQr && (
                     <div className="d-flex justify-content-center my-3">
                         <div className="spinner-border" role="status">
                             <span className="sr-only"></span>
@@ -101,11 +107,28 @@ export default function LinkResult({ link, useQr }) {
                         </a>
                     </div>
                 )}
+            </Modal.Body>
 
-                <button className="btn btn-secondary mt-3" onClick={copy}>
+            <Modal.Footer>
+                <Button variant="primary" onClick={copy}>
                     Copiar
-                </button>
-            </div>
-        </div>
+                </Button>
+            </Modal.Footer>
+            <Toast
+                show={showToast}
+                onClose={() => setShowToast(false)}
+                delay={2000}
+                autohide
+                bg="secondary"
+                className="position-fixed bottom-0 end-0 m-4"
+                style={{ width: "auto", minWidth: "200px", maxWidth: "300px" }}
+            >
+                <Toast.Body className="text-white w-100 fw-semibold">
+                    Link copiado para a área de transferência!
+                </Toast.Body>
+            </Toast>
+        </Modal>
     )
 }
+
+export default ResultModal

@@ -71,7 +71,7 @@ h1 span {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-control::placeholder {
+.form-control::placeholder, .password-input::placeholder {
     color: var(--text-muted);
 }
 
@@ -87,9 +87,9 @@ h1 span {
     outline: none;
 }
 
-.password-wrapper {
+/* .password-wrapper {
     position: relative;
-}
+} */
 
 .password-group {
     display: flex;
@@ -177,36 +177,53 @@ h1 span {
     color: var(--text-strong) !important;
 }
 
-.shortify-card {
+
+.modal-content {
     background-color: var(--surface-card);
     border: 1px solid var(--border-default);
     border-radius: 8px;
-    padding: 24px;
-    width: 50%;
     box-shadow: 0 0 15px var(--shadow-card);
-}
-
-.shortify-card h3 {
-    color: var(--text-strong);
-    text-align: center;
-}
-
-.shortify-card p {
     color: var(--text-main);
 }
 
-.text-muted {
-    color: var(--text-muted) !important;
+.modal-header {
+    border-bottom: 1px solid var(--border-default);
 }
 
-.shortify-card a {
+.modal-title {
+    color: var(--text-title);
+    font-weight: 600;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-body p {
+    color: var(--text-main);
+}
+
+.modal-body strong {
+    color: var(--text-strong);
+}
+
+.modal-body a {
     color: var(--primary);
     text-decoration: none;
 }
 
-.shortify-card a:hover {
+.modal-body a:hover {
     text-decoration: underline;
 }
+
+.modal-footer {
+    border-top: 1px solid var(--border-default);
+}
+
+.modal-body .spinner-border {
+    color: var(--primary);
+}
+
 
 @media (max-width: 768px) {
     .shortify-card {

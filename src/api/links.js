@@ -1,7 +1,7 @@
-const API = import.meta.env.VITE_API_URL
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
 async function postLink(data, endpoint) {
-    const res = await fetch(`${API}/${endpoint}`, {
+    const res = await fetch(`${VITE_API_URL}/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

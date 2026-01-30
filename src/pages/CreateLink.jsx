@@ -1,17 +1,17 @@
 import { useState, useRef } from "react"
+import useSubmit from "../hooks/useSubmit"
 import { FiEye, FiEyeOff, FiInfo } from "react-icons/fi"
 import {
 	Container,
 	Button,
 	Form,
-	InputGroup,
 	Row,
 	Col,
 	OverlayTrigger,
 	Tooltip,
 } from "react-bootstrap"
 
-import { createRandomLink, createCustomLink } from "../api/links"
+
 import { isValidUrl, isValidCode, isValidPassword } from "../utils/validators"
 import FormInput from "../components/FormInput"
 import ResultModal from "../components/ResultModal"
@@ -38,6 +38,12 @@ export default function CreateLink() {
 	const [formState, setFormState] = useState(initialFormState)
 
 	const inputRef = useRef(null)
+
+	const handleSubmit = useSubmit({
+		formState,
+		setFormState,
+		inputRef
+	})
 
 	const handleToggle = () => {
 		setFormState((prev) => ({
@@ -86,69 +92,6 @@ export default function CreateLink() {
 		}))
 	}
 
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-		const { url, password, code, usePassword, useCode } = formState
-
-		if (!url.trim() || !isValidUrl(url)) {
-			setFormState((prev) => ({
-				...prev,
-				result: {
-					error: !url.trim() ? "URL é obrigatória" : "URL inválida",
-				},
-				validated: true,
-			}))
-			return
-		}
-		if (useCode && !code.trim()) {
-			setFormState((prev) => ({
-				...prev,
-				result: { error: "Digite o código customizado" },
-				validated: true,
-			}))
-			return
-		}
-
-		setFormState((prev) => ({ ...prev, loading: true, result: null }))
-
-		const payload = useCode
-			? {
-				url,
-				code,
-				...(usePassword && { password }),
-			}
-			: {
-				url,
-				...(usePassword && { password }),
-			}
-
-		try {
-			const data = await (useCode
-				? createCustomLink(payload)
-				: createRandomLink(payload))
-			setFormState((prev) => ({
-				...prev,
-				result: {
-					...data,
-					mainColor: prev.mainColor,
-					secondaryColor: prev.secondaryColor,
-				},
-				password: "",
-				code: "",
-				validated: false,
-			}))
-			inputRef.current.focus()
-		} catch (err) {
-			const errorMessage =
-				err.error === "CODE_TAKEN"
-					? { error: "CODE_TAKEN", code }
-					: { error: err.error || "Erro de conexão com o servidor" }
-			setFormState((prev) => ({ ...prev, result: errorMessage }))
-		} finally {
-			setFormState((prev) => ({ ...prev, loading: false }))
-		}
-	}
-
 	const {
 		url,
 		password,
@@ -187,7 +130,7 @@ export default function CreateLink() {
 							info="O endereço completo do site que será encurtado."
 							feedback={
 								validated && !isValidPassword(password)
-									? "A senha deve ter entre 8 e 50 caracteres."
+									? "Insira uma URL com https:// ou http://"
 									: null
 							}
 						>

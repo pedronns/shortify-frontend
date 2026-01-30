@@ -1,90 +1,95 @@
 :root {
-    --bg-main: #121212;
-    --bg-gradient-start: #111;
-    --bg-gradient-mid: #151515;
-    --bg-gradient-end: #111;
+  --bg-main: #121212;
+  --bg-gradient-start: #111;
+  --bg-gradient-mid: #151515;
+  --bg-gradient-end: #111;
 
-    --surface-card: #161616;
-    --surface-input: #181a1c;
+  --surface-card: #161616;
+  --surface-input: #181a1c;
 
-    --border-default: #2a2a2a;
-    --border-error: #dc3545;
-    --border-valid: #16a34a;
+  --border-default: #2a2a2a;
+  --border-error: #dc3545;
+  --border-valid: #16a34a;
 
-    --primary: #1d7bff;
-    --primary-hover: #2563eb;
-    --primary-active: #1d4ed8;
+  --primary: #1d7bff;
+  --primary-hover: #2563eb;
+  --primary-active: #1d4ed8;
 
-    --text-main: #cbd5e1;
-    --text-strong: #fff;
-    --text-title: #e5e7eb;
-    --text-muted: #94a3b8;
+  --text-main: #cbd5e1;
+  --text-strong: #fff;
+  --text-title: #e5e7eb;
+  --text-muted: #94a3b8;
 
-    --focus-ring: #2563eb25;
-    --error-ring: #dc354540;
-    --valid-ring: #16a34a40;
-    --shadow-card: #000;
+  --focus-ring: #2563eb25;
+  --error-ring: #dc354540;
+  --valid-ring: #16a34a40;
+  --shadow-card: #000;
 }
 
 body {
-    min-height: 100vh;
-    background: linear-gradient(
-        180deg,
-        var(--bg-gradient-start) 0%,
-        var(--bg-gradient-mid) 40%,
-        var(--bg-gradient-end) 100%
-    );
-    color: var(--text-main);
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-mid) 40%,
+    var(--bg-gradient-end) 100%
+  );
+  color: var(--text-main);
 }
 
 .container {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border-default);
-    border-radius: 4rem;
-    box-shadow: 0 0 5px 0.25rem var(--bg-main);
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: 4rem;
+  box-shadow: 0 0 5px 0.25rem var(--bg-main);
 }
 
 .text-primary {
-    color: var(--primary) !important;
+  color: var(--primary) !important;
 }
 
 h1 {
-    color: var(--text-title);
-    font-weight: 600;
+  color: var(--text-title);
+  font-weight: 600;
 }
 
 h2,
 h3 {
-    color: var(--text-strong);
+  color: var(--text-strong);
 }
 
 h1 span {
-    color: var(--primary);
+  color: var(--primary);
 }
 
-.form-control, .form-control.is-valid {
-    padding: 10px 14px;
-    background-color: var(--surface-input) !important;
-    border: 1px solid var(--border-default);
-    border-radius: 6px;
-    color: var(--text-strong) !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+.form-control,
+.form-control.is-valid {
+  padding: 10px 14px;
+  background-color: var(--surface-input) !important;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  color: var(--text-strong) !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.form-control::placeholder, .password-input::placeholder {
-    color: var(--text-muted);
+.form-control::placeholder,
+.password-input::placeholder {
+  color: var(--text-muted);
 }
 
-.form-control:focus, .form-control.is-valid:focus {
-    border-color: var(--primary-hover);
-    box-shadow: 0 0 5px 0.25rem var(--focus-ring);
-    outline: none;
+.form-control:focus,
+.form-control.is-valid:focus {
+  border-color: var(--primary-hover);
+  box-shadow: 0 0 5px 0.25rem var(--focus-ring);
+  outline: none;
 }
 
 .form-control.is-invalid:focus {
-    border-color: var(--border-error);
-    box-shadow: 0 0 5px 0.25rem var(--error-ring);
-    outline: none;
+  border-color: var(--border-error);
+  box-shadow: 0 0 5px 0.25rem var(--error-ring);
+  outline: none;
 }
 
 /* .password-wrapper {
@@ -92,141 +97,141 @@ h1 span {
 } */
 
 .password-group {
-    display: flex;
-    align-items: center;
-    background-color: var(--surface-input);
-    border: 1px solid var(--border-default);
-    border-radius: 6px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  background-color: var(--surface-input);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .password-input {
-    flex: 1;
-    padding: 10px 14px;
-    background-color: var(--surface-input);
-    outline: none;
-    border: none;
-    border-radius: 6px 0 0 6px;
-    color: var(--text-strong);
+  flex: 1;
+  padding: 10px 14px;
+  background-color: var(--surface-input);
+  outline: none;
+  border: none;
+  border-radius: 6px 0 0 6px;
+  color: var(--text-strong);
 }
 
 .password-group.invalid {
-    border: 1px solid var(--border-error);
+  border: 1px solid var(--border-error);
 }
 
 .eye-toggle {
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    border-radius: 0 6px 6px 0;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: 1s;
-    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 0 6px 6px 0;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: 1s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .eye-toggle:hover {
-    color: var(--text-strong);
-    transform: translate(0, -1px);
+  color: var(--text-strong);
+  transform: translate(0, -1px);
 }
 
 .feedback-invalid {
-    color: var(--border-error);
-    font-size: 0.875rem;
-    margin-top: 4px;
-    text-align: center;
+  color: var(--border-error);
+  font-size: 0.875rem;
+  margin-top: 4px;
+  text-align: center;
 }
 
 .password-group:focus-within {
-    border: 1px solid var(--primary-active);
-    box-shadow: 0 0 5px 0.25rem var(--focus-ring);
+  border: 1px solid var(--primary-active);
+  box-shadow: 0 0 5px 0.25rem var(--focus-ring);
 }
 
 .password-group.invalid:focus-within {
-    border-color: var(--border-error);
-    box-shadow: 0 0 5px 0.25rem var(--error-ring);
+  border-color: var(--border-error);
+  box-shadow: 0 0 5px 0.25rem var(--error-ring);
 }
 
 .form-check-input {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .form-check-input:checked {
-    background-color: var(--primary) !important;
-    border-color: var(--primary) !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }
 
 .btn-lg {
-    background-color: var(--primary);
-    border-color: var(--primary);
-    color: var(--text-strong);
-    border-radius: 6px;
-    padding: 10px 20px;
-    font-weight: 500;
-    transition: 0.5s ease;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-strong);
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: 500;
+  transition: 0.5s ease;
 }
 
 .btn-lg:hover {
-    background-color: var(--primary-hover);
-    border-color: var(--primary-hover);
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 .btn-lg:active {
-    background-color: var(--primary-active) !important;
-    border-color: var(--primary-active) !important;
-    color: var(--text-strong) !important;
+  background-color: var(--primary-active) !important;
+  border-color: var(--primary-active) !important;
+  color: var(--text-strong) !important;
 }
 
-
 .modal-content {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border-default);
-    border-radius: 8px;
-    box-shadow: 0 0 15px var(--shadow-card);
-    color: var(--text-main);
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  box-shadow: 0 0 15px var(--shadow-card);
+  color: var(--text-main);
 }
 
 .modal-header {
-    border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .modal-title {
-    color: var(--text-title);
-    font-weight: 600;
+  color: var(--text-title);
+  font-weight: 600;
 }
 
 .modal-header .btn-close {
-    filter: invert(1);
+  filter: invert(1);
 }
 
 .modal-body p {
-    color: var(--text-main);
+  color: var(--text-main);
 }
 
 .modal-body strong {
-    color: var(--text-strong);
+  color: var(--text-strong);
 }
 
 .modal-body a {
-    color: var(--primary);
-    text-decoration: none;
+  color: var(--primary);
+  text-decoration: none;
 }
 
 .modal-body a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .modal-footer {
-    border-top: 1px solid var(--border-default);
+  border-top: 1px solid var(--border-default);
 }
 
 .modal-body .spinner-border {
-    color: var(--primary);
+  color: var(--primary);
 }
 
-
 @media (max-width: 768px) {
-    .shortify-card {
-        width: 100%;
-    }
+  .shortify-card {
+    width: 100%;
+  }
 }

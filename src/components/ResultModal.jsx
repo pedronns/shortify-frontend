@@ -10,125 +10,127 @@ import { createQrCode } from "../api/qrCode"
 import "../App.css"
 
 const ResultModal = ({ link, useQr, onClose, error }) => {
-    if (!link || error) return null
+	if (!link || error) return null
+	const show = !!link && !error
 
-    const shortUrl = `${FRONTEND_URL}/${link.code}`
+	const origin = new URL(FRONTEND_URL).origin
+	const host = new URL(FRONTEND_URL).host
 
-    const [qrCode, setQrCode] = useState(null)
-    const [showToast, setShowToast] = useState(false)
+	const fullShortUrl = link ? `${origin}/${link.code}` : ""
+	const displayShortUrl = link ? `${host}/${link.code}` : ""
 
-    useEffect(() => {
-        if (!shortUrl || !link.mainColor || !link.secondaryColor) {
-            return
-        }
+	const [qrCode, setQrCode] = useState(null)
+	const [showToast, setShowToast] = useState(false)
 
-        const controller = new AbortController()
+	useEffect(() => {
+		if (!show || !useQr) return
 
-        async function loadQr() {
-            try {
-                const base64 = await createQrCode(
-                    shortUrl,
-                    link.mainColor,
-                    link.secondaryColor,
-                    { signal: controller.signal },
-                )
+		const controller = new AbortController()
 
-                setQrCode(base64)
-            } catch (err) {
-                if (err.name === "AbortError") {
-                    return
-                }
+		async function loadQr() {
+			try {
+				const base64 = await createQrCode(
+					shortUrl,
+					link.mainColor,
+					link.secondaryColor,
+					{ signal: controller.signal },
+				)
 
-                console.error("Erro ao gerar QR Code", {
-                    shortUrl,
-                    mainColor: link.mainColor,
-                    secondaryColor: link.secondaryColor,
-                    error: err,
-                })
-            }
-        }
+				setQrCode(base64)
+			} catch (err) {
+				if (err.name === "AbortError") {
+					return
+				}
 
-        loadQr()
+				console.error("Erro ao gerar QR Code", {
+					shortUrl,
+					mainColor: link.mainColor,
+					secondaryColor: link.secondaryColor,
+					error: err,
+				})
+			}
+		}
 
-        return () => {
-            controller.abort()
-        }
-    }, [shortUrl, link.mainColor, link.secondaryColor])
+		loadQr()
 
-    function copy() {
-        navigator.clipboard.writeText(shortUrl)
-        setShowToast(true)
-    }
+		return () => controller.abort()
 
-    return (
-        <Modal show centered onHide={onClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Link criado com sucesso!</Modal.Title>
-            </Modal.Header>
+	}, [fullShortUrl, link.mainColor, link.secondaryColor])
 
-            <Modal.Body className="text-center">
-                <p className="mb-2" style={{ overflow: "hidden" }}>
-                    <strong>Original:</strong> {link.url}
-                </p>
+	function copy() {
+		navigator.clipboard.writeText(fullShortUrl)
+		setShowToast(true)
+	}
 
-                <p className="mb-2">
-                    <strong>Encurtado:</strong>{" "}
-                    <a href={shortUrl} target="_blank" rel="noreferrer">
-                        {shortUrl}
-                    </a>
-                </p>
+	return (
+		<Modal show centered onHide={onClose}>
+			<Modal.Header closeButton>
+				<Modal.Title>Link criado com sucesso!</Modal.Title>
+			</Modal.Header>
 
-                {link.protected && (
-                    <p className="text-primary fw-bold">
-                        Este link está protegido por senha
-                    </p>
-                )}
+			<Modal.Body className="text-center">
+				<p className="mb-2" style={{ overflow: "hidden" }}>
+					<strong>Original:</strong> {link.url}
+				</p>
 
-                {!qrCode && useQr && (
-                    <div className="d-flex justify-content-center my-3">
-                        <div className="spinner-border" role="status">
-                            <span className="sr-only"></span>
-                        </div>
-                    </div>
-                )}
+				<p className="mb-2">
+					<strong>Encurtado:</strong>{" "}
+					<a href={fullShortUrl} target="_blank" rel="noreferrer">
+						{displayShortUrl}
+					</a>
+				</p>
 
-                {useQr && (
-                    <div className="text-center my-3">
-                        <a
-                            href={`data:image/png;base64,${qrCode}`}
-                            download={`qrcode-${link.code}`}
-                            title="Clique para baixar"
-                        >
-                            <img
-                                src={`data:image/png;base64,${qrCode}`}
-                                className="img-fluid"
-                                style={{ maxWidth: "200px" }}
-                            />
-                        </a>
-                    </div>
-                )}
-            </Modal.Body>
+				{link.protected && (
+					<p className="text-primary fw-bold">
+						Este link está protegido por senha
+					</p>
+				)}
 
-            <Modal.Footer>
-                <Button variant="primary" onClick={copy}>
-                    Copiar
-                </Button>
-            </Modal.Footer>
-            <Toast
-                show={showToast}
-                onClose={() => setShowToast(false)}
-                delay={2000}
-                autohide
-                bg="secondary"
-                className="position-fixed bottom-0 end-0 m-4"
-                style={{ width: "auto", minWidth: "200px", maxWidth: "300px" }}
-            >
-                <Toast.Body className="text-white w-100 fw-semibold">
-                    Link copiado para a área de transferência!
-                </Toast.Body>
-            </Toast>
-        </Modal>
-    )
+				{!qrCode && useQr && (
+					<div className="d-flex justify-content-center my-3">
+						<div className="spinner-border" role="status">
+							<span className="sr-only"></span>
+						</div>
+					</div>
+				)}
+
+				{useQr && (
+					<div className="text-center my-3">
+						<a
+							href={`data:image/png;base64,${qrCode}`}
+							download={`qrcode-${link.code}`}
+							title="Clique para baixar"
+						>
+							<img
+								src={`data:image/png;base64,${qrCode}`}
+								className="img-fluid"
+								style={{ maxWidth: "200px" }}
+							/>
+						</a>
+					</div>
+				)}
+			</Modal.Body>
+
+			<Modal.Footer>
+				<Button variant="primary" onClick={copy}>
+					Copiar
+				</Button>
+			</Modal.Footer>
+			<Toast
+				show={showToast}
+				onClose={() => setShowToast(false)}
+				delay={2000}
+				autohide
+				bg="secondary"
+				className="position-fixed bottom-0 end-0 m-4"
+				style={{ width: "auto", minWidth: "200px", maxWidth: "300px" }}
+			>
+				<Toast.Body className="text-white w-100 fw-semibold">
+					Link copiado para a área de transferência!
+				</Toast.Body>
+			</Toast>
+		</Modal>
+	)
 }
 
 export default ResultModal

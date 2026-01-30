@@ -5,20 +5,20 @@ import NotFound from "./pages/NotFound"
 import Footer from "./components/Footer"
 
 export default function App() {
-    return (
-        <BrowserRouter>
-            <div className="d-flex flex-column min-vh-100">
-                <main className="flex-grow-1">
-                    <Routes>
-                        <Route path="/" element={<CreateLink />} />
-                        <Route path="/:code" element={<OpenLink />} />
-                        <Route path="/404" element={<NotFound />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </main>
+  return (
+    <BrowserRouter>
+      <div className="d-flex flex-column min-vh-100">
+        <main className="flex-grow-1">
+          <Routes>
+            <Route path="/" element={<CreateLink />} />
+            <Route path="/:code" element={<OpenLink />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
 
-                <Footer />
-            </div>
-        </BrowserRouter>
-    )
+        <Footer />
+      </div>
+    </BrowserRouter>
+  )
 }

@@ -52,7 +52,7 @@ export default function App() {
     <BrowserRouter>
       <div className="d-flex flex-column min-vh-100">
         <Header />
-        <main className="flex-grow-1">
+        <main className="flex-grow-1 mx-0 px-0">
           <Routes>
             <Route path="/" element={<CreateLink onLinkCreated={handleLinkCreated} />} />
             <Route path="/:code" element={<OpenLink />} />

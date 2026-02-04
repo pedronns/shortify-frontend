@@ -23,7 +23,7 @@ export default function FormInput({
 
 				{info && (
 					<OverlayTrigger
-						placement="right"
+						placement="top"
 						overlay={<Tooltip>{info}</Tooltip>}
 					>
 						<span

@@ -205,7 +205,7 @@ export default function CreateLink({ onLinkCreated }) {
 										</Form.Label>
 
 										<OverlayTrigger
-											placement="right"
+											placement="top"
 											overlay={
 												<Tooltip>
 													Protege o link com uma senha
@@ -282,7 +282,7 @@ export default function CreateLink({ onLinkCreated }) {
 							<Form.Label className="mb-0">QR Code</Form.Label>
 
 							<OverlayTrigger
-								placement="right"
+								placement="top"
 								overlay={
 									<Tooltip>
 										Escolha as cores do QR Code que será

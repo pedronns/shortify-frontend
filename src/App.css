@@ -27,7 +27,8 @@
 }
 
 body {
-  min-height: 100vh;
+  max-height: fit-content;
+  padding: ;
   background: linear-gradient(
     180deg,
     var(--bg-gradient-start) 0%,
@@ -257,7 +258,26 @@ h1 span {
 }
 
 @media (max-width: 768px) {
-  .shortify-card {
+  body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  .main {
     width: 100%;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    margin: 0.5rem auto;
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .table {
+    min-width: 700px;
   }
 }
+

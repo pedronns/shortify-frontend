@@ -60,60 +60,61 @@ export default function LinkList({ links, onLinkDeleted }) {
 
 
   return (
-    <Container className="table-wrapper">
+    <Container >
       <p className="h4 mt-4 mb-2 text-center">Links que você criou</p>
 
-
-      <Table striped bordered pagin hover variant="dark" className="mx-3 ">
-        <thead>
-          <tr>
-            <th >URL</th>
-            <th >Link Criado</th>
-            <th >Criado em</th>
-            <th >Protegido</th>
-            <th >Clicks</th>
-            <th >Ações</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {currentData.length > 0 ? (
-
-            currentData.map(item => {
-              const shortUrl = `${FRONTEND_URL}/${item.code}`
-              const date = new Date(item.createdAt).toLocaleString('pt-BR', { dateStyle: 'short' }) ?? '-'
-
-              return (
-                <tr key={item.code}>
-                  <td>{item.url}</td>
-                  <td>
-                    <a
-                      href={shortUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {shortUrl}
-                    </a>
-                  </td>
-                  <td>{date}</td>
-                  <td>{item.protected ? 'Sim' : 'Não'}</td>
-                  <td>{item.clicks ?? 0}</td>
-                  <td>
-                    {/* <Button variant="outline-primary" className="mx-1"> Editar </Button> */}
-                    <Button variant="outline-danger" className="mx-1" onClick={() => handleDelete(item.code)}>Excluir</Button>
-                  </td>
-                </tr>
-              )
-            })
-          ) : (
+      <div className="table-wrapper">
+        <Table striped bordered pagin hover variant="dark" className="">
+          <thead>
             <tr>
-              <td colSpan={6} className="text-secondary text-center">
-                Sem links criados para exibir
-              </td>
+              <th >URL</th>
+              <th >Link Criado</th>
+              <th >Criado em</th>
+              <th >Protegido</th>
+              <th >Clicks</th>
+              <th >Ações</th>
             </tr>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+
+          <tbody>
+            {currentData.length > 0 ? (
+
+              currentData.map(item => {
+                const shortUrl = `${FRONTEND_URL}/${item.code}`
+                const date = new Date(item.createdAt).toLocaleString('pt-BR', { dateStyle: 'short' }) ?? '-'
+
+                return (
+                  <tr key={item.code}>
+                    <td>{item.url}</td>
+                    <td>
+                      <a
+                        href={shortUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {shortUrl}
+                      </a>
+                    </td>
+                    <td>{date}</td>
+                    <td>{item.protected ? 'Sim' : 'Não'}</td>
+                    <td>{item.clicks ?? 0}</td>
+                    <td>
+                      {/* <Button variant="outline-primary" className="mx-1"> Editar </Button> */}
+                      <Button variant="outline-danger" className="mx-1" onClick={() => handleDelete(item.code)}>Excluir</Button>
+                    </td>
+                  </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-secondary text-center">
+                  Sem links criados para exibir
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </div>
 
       {currentData.length > 0 &&
         <div className="position-absolute start-50 translate-middle-x">

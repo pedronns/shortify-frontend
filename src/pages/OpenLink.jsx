@@ -75,6 +75,7 @@ export default function OpenLink() {
   if (!protectedLink) return null
 
   return (
+    
     <div className="d-flex justify-content-center align-items-center min-vh-100">
       <div
         className="shortify-card shadow-sm p-4"

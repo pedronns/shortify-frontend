@@ -6,8 +6,6 @@ const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL
 
 const itemsPerPage = 10;
 
-
-
 export default function LinkList({ links, onLinkDeleted }) {
   const [showToast, setShowToast] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,8 +61,10 @@ export default function LinkList({ links, onLinkDeleted }) {
 
   return (
     <Container className="table-wrapper">
+      <p className="h4 mt-4 mb-2 text-center">Links que você criou</p>
 
-      <Table striped bordered pagin hover variant="dark" className="m-3 ">
+
+      <Table striped bordered pagin hover variant="dark" className="mx-3 ">
         <thead>
           <tr>
             <th >URL</th>

@@ -1,9 +1,9 @@
-import isUrl from 'validator/lib/isUrl'
+import validator from 'validator'
 
 const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL
 
 export function isValidUrl(str) {
-  return isUrl(str) && !str.includes(FRONTEND_URL)
+  return validator.isURL(str) && !str.includes(FRONTEND_URL)
 }
 
 export function isValidCode(code) {

@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="app-footer text-center py-3">
+    <footer className={"app-footer text-center py-3 fixed-bottom"}>
       <small>
         © {new Date().getFullYear()} Shortify · Pedro Nunes ·{" "}
         <a

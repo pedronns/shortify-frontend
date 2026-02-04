@@ -21,18 +21,18 @@ export default function App() {
 
   function handleLinkCreated(newLink) {
     setLinks(prevLinks => {
-    const map = new Map();
+      const map = new Map();
 
-    [newLink, ...prevLinks].forEach(link => {
-      map.set(link.code, link)
+      [newLink, ...prevLinks].forEach(link => {
+        map.set(link.code, link)
+      })
+
+      const uniqueLinks = Array.from(map.values())
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(uniqueLinks))
+
+      return uniqueLinks
     })
-
-    const uniqueLinks = Array.from(map.values())
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(uniqueLinks))
-
-    return uniqueLinks
-  })
   }
 
   function handleLinkDeleted(code) {
@@ -50,9 +50,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column min-vh-100">
+      <div className="d-flex flex-column">
         <Header />
-        <main className="flex-grow-1 mx-0 px-0">
+        <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<CreateLink onLinkCreated={handleLinkCreated} />} />
             <Route path="/:code" element={<OpenLink />} />
@@ -61,8 +61,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
-
-        <Footer />
+        <Footer  />
       </div>
     </BrowserRouter>
   )

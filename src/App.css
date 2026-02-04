@@ -1,10 +1,11 @@
 :root {
-  --bg-main: #121212;
   --bg-gradient-start: #111;
   --bg-gradient-mid: #151515;
-  --bg-gradient-end: #111;
+  --bg-gradient-end: #171717;
+  
+  --box-shadow: #121212;
 
-  --surface-card: #151515;
+  --surface-card: #111;
   --surface-input: #181a1c;
 
   --border-default: #2a2a2a;
@@ -27,29 +28,36 @@
 }
 
 body {
-  max-height: fit-content;
-  padding: ;
-  background: linear-gradient(
-    180deg,
-    var(--bg-gradient-start) 0%,
-    var(--bg-gradient-mid) 40%,
-    var(--bg-gradient-end) 100%
+  min-height: 100vh;
+  padding-top: 90px; /* navbar fixed */
+  margin: 0;
+
+  background-image: linear-gradient(
+    to right top,
+    #000 0%,
+    #0d0d0d 35%,
+    #151515 70%,
+    #1d1d1d 100%
   );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: var(--text-main);
+  white-space: nowrap;
 }
 
 .header {
   background-color: var(--surface-card);
   color: var(--text-main) !important;
   border: 1px solid var(--border-default);
-  box-shadow: 0 0 5px 0.25rem var(--bg-main);
+  box-shadow: 0 0 5px 0.25rem var(--box-shadow);
 }
 
 .main {
   background-color: var(--surface-card);
   border: 1px solid var(--border-default);
   border-radius: 4rem;
-  box-shadow: 0 0 5px 0.25rem var(--bg-main);
+  box-shadow: 0 0 5px 0.25rem var(--box-shadow);
 }
 
 .text-primary {
@@ -260,7 +268,9 @@ h1 span {
 @media (max-width: 768px) {
   body {
     margin: 0;
+    padding-top: 70px;
     overflow-x: hidden;
+    padding-bottom: 70px !important;
   }
 
   .main {
@@ -279,5 +289,22 @@ h1 span {
   .table {
     min-width: 700px;
   }
-}
 
+  .password-group {
+    overflow: hidden;
+  }
+
+  .eye-toggle {
+    flex-shrink: 0;
+    min-width: 40px;
+    padding: 0 10px;
+  }
+
+  .password-input {
+    min-width: 0;
+  }
+
+  .app-footer {
+    display: none;
+  }
+}

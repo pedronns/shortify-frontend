@@ -8,7 +8,7 @@ import logo from '../img/logo.png'
 
 function Header() {
   return (
-    <Navbar expand="lg" variant='dark' className="header">
+    <Navbar expand="lg" variant='dark' fixed='top' className="header fixed">
       <Container className=''>
         <Navbar.Brand href="/">
           <img

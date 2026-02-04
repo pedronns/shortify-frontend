@@ -111,7 +111,7 @@ export default function CreateLink({ onLinkCreated }) {
 	}
 
 	return (
-		<Container className="main mt-5 p-4 w-75 text-center">
+		<Container className="main p-4 w-75 text-center">
 			<div className="d-flex justify-content-center align-items-center gap-2 mb-2">
 				<img src={logo} alt="logo" style={{ width: "50px" }} />
 				<h1 className="m-0 text-primary">Shortify</h1>
@@ -250,7 +250,7 @@ export default function CreateLink({ onLinkCreated }) {
 										/>
 
 										<div
-											className="eye-toggle"
+											className="eye-toggle mr-3"
 											onClick={handleToggle}
 											role="button"
 										>
@@ -304,12 +304,12 @@ export default function CreateLink({ onLinkCreated }) {
 							<Row>
 								{[
 									{
-										label: "Cor principal",
+										label: "Cor #1",
 										value: mainColor,
 										setter: "mainColor",
 									},
 									{
-										label: "Cor secundária",
+										label: "Cor #2",
 										value: secondaryColor,
 										setter: "secondaryColor",
 									},

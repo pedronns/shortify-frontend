@@ -61,10 +61,10 @@ export default function LinkList({ links, onLinkDeleted }) {
 
   return (
     <Container >
-      <p className="h4 mt-4 mb-2 text-center">Links que você criou</p>
+      <p className="h4 mt-1 mb-4 text-center">Links que você criou</p>
 
       <div className="table-wrapper">
-        <Table striped bordered pagin hover variant="dark" className="">
+        <Table striped bordered hover variant="dark" className="">
           <thead>
             <tr>
               <th >URL</th>

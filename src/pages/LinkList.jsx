@@ -115,16 +115,18 @@ export default function LinkList({ links, onLinkDeleted }) {
         </tbody>
       </Table>
 
-      <div className="position-absolute start-50 translate-middle-x">
-        <Pagination className="pagination-dark" size="md" >
-          <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
-          <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
-          {paginationItems}
-          <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} />
-          <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} />
-        </Pagination>
-        <p className="text-center">Exibindo itens {pageStart}-{pageEnd} de {links.length}</p>
-      </div>
+      {currentData.length > 0 &&
+        <div className="position-absolute start-50 translate-middle-x">
+          <Pagination className="pagination-dark" size="md" >
+            <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
+            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
+            {paginationItems}
+            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} />
+            <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} />
+          </Pagination>
+          <p className="text-center">Exibindo itens {pageStart}-{pageEnd} de {links.length}</p>
+        </div>
+      }
 
       <ToastContainer position="bottom-end">
         <Toast

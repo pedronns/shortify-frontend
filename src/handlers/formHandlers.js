@@ -1,5 +1,5 @@
 import { isValidUrl } from '../utils/validators'
-import { createRandomLink, createCustomLink } from './../api/links';
+import { createRandomLink, createCustomLink, deleteLink } from './../api/links'
 
 export function validateForm(formState) {
   const { url, code, useCode } = formState
@@ -46,7 +46,9 @@ export function buildPayload(formState) {
 }
 
 export async function submitLink(payload, useCode) {
-  return useCode
-    ? createCustomLink(payload)
-    : createRandomLink(payload)
+  return useCode ? createCustomLink(payload) : createRandomLink(payload)
+}
+
+export async function removeLink(code) {
+  return deleteLink(code)
 }

@@ -1,6 +1,6 @@
 import { validateForm, submitLink, buildPayload } from "../handlers/formHandlers"
 
-export default function useSubmit({ formState, setFormState, inputRef }) {
+export default function useSubmit({ formState, setFormState, inputRef, onLinkCreated }) {
   return async (e) => {
     e.preventDefault()
 
@@ -20,6 +20,7 @@ export default function useSubmit({ formState, setFormState, inputRef }) {
     
     try {
       const data = await submitLink(payload, formState.useCode)
+      onLinkCreated?.(data)
       
       setFormState(prev => ({
         ...prev,

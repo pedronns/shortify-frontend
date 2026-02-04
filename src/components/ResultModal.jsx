@@ -117,6 +117,7 @@ const ResultModal = ({ link, useQr, onClose, error }) => {
 				</Button>
 			</Modal.Footer>
 			<Toast
+				
 				show={showToast}
 				onClose={() => setShowToast(false)}
 				delay={2000}

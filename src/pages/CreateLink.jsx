@@ -1,16 +1,12 @@
 import { useState, useRef } from "react"
 import useSubmit from "../hooks/useSubmit"
-import { FiEye, FiEyeOff, FiInfo } from "react-icons/fi"
-import {
-	Container,
-	Button,
-	Form,
-	Row,
-	Col,
-	OverlayTrigger,
-	Tooltip,
-} from "react-bootstrap"
 
+import {
+	Container, Button,
+	Form, Row, Col,
+	OverlayTrigger, Tooltip,
+} from "react-bootstrap"
+import { FiEye, FiEyeOff, FiInfo } from "react-icons/fi"
 
 import { isValidUrl, isValidCode, isValidPassword } from "../utils/validators"
 import FormInput from "../components/FormInput"
@@ -19,7 +15,7 @@ import CodeTakenModal from "../components/CodeTakenModal"
 import "../App.css"
 import logo from "../img/logo.png"
 
-export default function CreateLink() {
+export default function CreateLink({ onLinkCreated }) {
 	const initialFormState = {
 		url: "",
 		password: "",
@@ -42,7 +38,8 @@ export default function CreateLink() {
 	const handleSubmit = useSubmit({
 		formState,
 		setFormState,
-		inputRef
+		inputRef,
+		onLinkCreated
 	})
 
 	const handleToggle = () => {
@@ -114,7 +111,7 @@ export default function CreateLink() {
 	}
 
 	return (
-		<Container className="mt-5 p-4 w-75 text-center">
+		<Container className="main mt-5 p-4 w-75 text-center">
 			<div className="d-flex justify-content-center align-items-center gap-2 mb-2">
 				<img src={logo} alt="logo" style={{ width: "50px" }} />
 				<h1 className="m-0 text-primary">Shortify</h1>
@@ -128,30 +125,25 @@ export default function CreateLink() {
 						<FormInput
 							label="URL do link"
 							info="O endereço completo do site que será encurtado."
+							placeholder="https://exemplo.com"
+							value={url}
+							ref={inputRef}
+							onChange={handleChange("url")}
 							feedback={
 								validated && !isValidPassword(password)
 									? "Insira uma URL válida"
 									: null
 							}
+							isValid={
+								validated &&
+								isValidUrl(url) &&
+								url.trim() !== ""
+							}
+							isInvalid={
+								validated &&
+								(!url.trim() || !isValidUrl(url))
+							}
 						>
-							<Form.Control
-								ref={inputRef}
-								type="text"
-								placeholder="https://exemplo.com"
-								value={url}
-								onChange={handleChange("url")}
-								autoFocus
-								required
-								isValid={
-									validated &&
-									isValidUrl(url) &&
-									url.trim() !== ""
-								}
-								isInvalid={
-									validated &&
-									(!url.trim() || !isValidUrl(url))
-								}
-							/>
 						</FormInput>
 					</Col>
 				</Row>
@@ -176,6 +168,7 @@ export default function CreateLink() {
 					</Col>
 				</Row>
 
+
 				{(useCode || usePassword) && (
 					<Row className="justify-content-center">
 						{/* code */}
@@ -184,23 +177,19 @@ export default function CreateLink() {
 								<FormInput
 									label="Código customizado"
 									info="Define o final do link encurtado [ex: short.ly/meu-codigo]"
+									placeholder="meu-codigo"
+									value={code}
+									onChange={handleChange("code")}
+									isInvalid={
+										validated && !isValidCode(code)
+									}
+									isValid={validated && isValidCode(code)}
 									feedback={
 										validated && !isValidCode(code)
 											? "O código deve ter entre 6 e 20 caracteres e conter apenas letras, números, '_' ou '-'."
 											: null
 									}
 								>
-									<Form.Control
-										type="text"
-										placeholder="meu-codigo"
-										value={code}
-										onChange={handleChange("code")}
-										required
-										isInvalid={
-											validated && !isValidCode(code)
-										}
-										isValid={validated && isValidCode(code)}
-									/>
 								</FormInput>
 							</Col>
 						)}

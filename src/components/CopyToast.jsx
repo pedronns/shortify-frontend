@@ -1,11 +1,11 @@
 import Toast from 'react-bootstrap/Toast';
 
-function CopyToast() {
+function Toast({ message, variant = "dark" }) {
   return (
-    <Toast>
-      <Toast.Body>Link copiado!</Toast.Body>
+    <Toast bg={variant}>
+      <Toast.Body>{message}</Toast.Body>
     </Toast>
   );
 }
 
-export default CopyToast;
+export default Toast;

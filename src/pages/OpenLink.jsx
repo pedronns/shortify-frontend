@@ -5,6 +5,7 @@ import "../App.css"
 const API = import.meta.env.VITE_API_URL
 
 export default function OpenLink() {
+
   const { code } = useParams()
   const navigate = useNavigate()
   const [password, setPassword] = useState("")
@@ -12,6 +13,8 @@ export default function OpenLink() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+
+  // TO FIX: clicks incrementation
   useEffect(() => {
     const fetchLinkInfo = async () => {
       try {
@@ -19,9 +22,14 @@ export default function OpenLink() {
         if (!res.ok) throw new Error("Link not found")
 
         const data = await res.json()
-        data.protected
-          ? setProtectedLink(true)
-          : (window.location.href = data.url)
+        if (data.protected) {
+          setProtectedLink(true)
+          return
+        }
+        const redirectRes = await fetch(`${API}/${code}`)
+        const redirectData = await redirectRes.json()
+
+        window.location.href = redirectData.originalUrl
       } catch {
         navigate("/404", { replace: true })
       } finally {

@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button"
 import Modal from "react-bootstrap/Modal"
 
-const CodeTakenModal = ({ result, onClose }) => {
+const CodeTakenModal = ({ result, code, onClose }) => {
   if (!result || result.error !== "CODE_TAKEN") return null
 
   return (
@@ -13,7 +13,7 @@ const CodeTakenModal = ({ result, onClose }) => {
       <Modal.Body className="text-center">
         <p className="mb-2">
           O código{" "}
-          <strong className="text-primary">{result.code}</strong> já
+          <strong className="text-primary">{code}</strong> já
           está em uso.
         </p>
 

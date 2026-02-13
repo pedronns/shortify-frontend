@@ -170,7 +170,7 @@ export default function CreateLink({ onLinkCreated }) {
 
 
 				{(useCode || usePassword) && (
-					<Row className="justify-content-center">
+					<Row className="justify-content-center gap-4">
 						{/* code */}
 						{useCode && (
 							<Col xs={12} md={4}>
@@ -186,7 +186,7 @@ export default function CreateLink({ onLinkCreated }) {
 									isValid={validated && isValidCode(code)}
 									feedback={
 										validated && !isValidCode(code)
-											? "O código deve ter entre 6 e 20 caracteres e conter apenas letras, números, '_' ou '-'."
+											? "O código deve ter 6-20 letras, números, '_' ou '-'."
 											: null
 									}
 								>
@@ -195,81 +195,29 @@ export default function CreateLink({ onLinkCreated }) {
 						)}
 
 						{/* password */}
-						{/* some workarounds were required */}
 						{usePassword && (
 							<Col xs={12} md={4}>
-								<Form.Group className="mb-3">
-									<div className="d-flex justify-content-center align-items-center gap-1 mb-1">
-										<Form.Label className="mb-0">
-											Senha
-										</Form.Label>
+								<FormInput
+									label="Senha"
+									info="Protege o link com uma senha de acesso"
+									type={showPassword ? "text" : "password"}
+									placeholder={showPassword ? "senhasegura" : "•••••••••••"}
+									value={password}
+									onChange={handleChange("password")}
+									isInvalid={validated && !isValidPassword(password)}
+									isValid={validated && isValidPassword(password)}
+									feedback={
+										validated && !isValidPassword(password)
+											? "A senha deve ter entre 8 e 50 caracteres."
+											: null
+									}
+									rightElement={
+										<span onClick={handleToggle} style={{ cursor: "pointer" }}>
+											{showPassword ? <FiEye className="eye-toggle" /> : <FiEyeOff className="eye-toggle" />}
+										</span>
+									}
+								/>
 
-										<OverlayTrigger
-											placement="top"
-											overlay={
-												<Tooltip>
-													Protege o link com uma senha
-													de acesso
-												</Tooltip>
-											}
-										>
-											<span
-												role="button"
-												tabIndex={0}
-												className="text-primary mb-1"
-												style={{ cursor: "pointer" }}
-											>
-												<FiInfo size={16} />
-											</span>
-										</OverlayTrigger>
-									</div>
-
-									<div
-										className={`password-group ${validated &&
-											!isValidPassword(password)
-											? "invalid"
-											: ""
-											}`}
-									>
-										<input
-											className="password-input"
-											ref={inputRef}
-											placeholder={
-												showPassword
-													? "senhasegura"
-													: "•••••••••••"
-											}
-											type={
-												showPassword
-													? "text"
-													: "password"
-											}
-											value={password}
-											onChange={handleChange("password")}
-											required
-										/>
-
-										<div
-											className="eye-toggle mr-3"
-											onClick={handleToggle}
-											role="button"
-										>
-											{showPassword ? (
-												<FiEye />
-											) : (
-												<FiEyeOff />
-											)}
-										</div>
-									</div>
-
-									{validated &&
-										!isValidPassword(password) && (
-											<div className="feedback-invalid">
-												A senha deve ter entre 8 e 50
-												caracteres.
-											</div>
-										)}
-								</Form.Group>
 							</Col>
 						)}
 					</Row>
@@ -354,7 +302,7 @@ export default function CreateLink({ onLinkCreated }) {
 				error={result?.error}
 			/>
 
-			<CodeTakenModal result={result} onClose={handleClose} />
+			<CodeTakenModal result={result} code={formState.code} onClose={handleClose} />
 		</Container>
 	)
 }

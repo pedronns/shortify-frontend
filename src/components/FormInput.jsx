@@ -4,6 +4,7 @@ import { cloneElement } from "react"
 
 export default function FormInput({
 	colSm = 12,
+	type,
 	label,
 	info,
 	placeholder,
@@ -12,7 +13,8 @@ export default function FormInput({
 	value,
 	onChange,
 	isInvalid,
-	isValid
+	isValid,
+	rightElement
 }) {
 	return (
 		<Form.Group as={Row} className="mb-3 justify-content-center">
@@ -43,22 +45,31 @@ export default function FormInput({
 					isInvalid: !!feedback,
 				})}
 
-			<Form.Control
-				type="text"
-				placeholder={placeholder}
-				value={value}
-				onChange={onChange}
-				required
-				autoFocus // teste
-				isInvalid={isInvalid}
-				isValid={isValid}
-			/>
+			<div className="position-relative">
 
-			{feedback && (
-				<Form.Control.Feedback type="invalid">
-					{feedback}
-				</Form.Control.Feedback>
-			)}
+				<Form.Control
+					type={type}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+					required
+					autoFocus // teste
+					isInvalid={isInvalid}
+					isValid={isValid}
+				/>
+
+				{rightElement && (
+					<div className="position-absolute top-50 end-0 translate-middle-y pe-3 me-2">
+						{rightElement}
+					</div>
+				)}
+
+				{feedback && (
+					<Form.Control.Feedback className="text-wrap" type="invalid">
+						{feedback}
+					</Form.Control.Feedback>
+				)}
+			</div>
 		</Form.Group>
 	)
 }

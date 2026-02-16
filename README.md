@@ -2,6 +2,8 @@
 
 A modern and responsive web interface for the **Shortify** URL shortener, built with **React**, **Vite**, and **Bootstrap**.
 
+Live demo: https://shortify-6s8t.vercel.app/
+
 ---
 
 ## Features

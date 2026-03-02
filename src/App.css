@@ -53,13 +53,6 @@ body {
   box-shadow: 0 0 5px 0.25rem var(--box-shadow);
 }
 
-.main {
-  background-color: var(--surface-card);
-  border: 1px solid var(--border-default);
-  border-radius: 4rem;
-  box-shadow: 0 0 5px 0.25rem var(--box-shadow);
-}
-
 .text-primary {
   color: var(--primary) !important;
 }
@@ -107,10 +100,6 @@ h1 span {
   box-shadow: 0 0 5px 0.25rem var(--error-ring);
   outline: none;
 }
-
-/* .password-wrapper {
-    position: relative;
-} */
 
 .password-group {
   display: flex;
@@ -259,6 +248,15 @@ h1 span {
 .pagination-dark .page-item.active .page-link {
   background-color: #0d6efd;
   border-color: #0d6efd;
+}
+
+.form-control.is-valid,
+.form-control.is-invalid,
+textarea.is-valid,
+textarea.is-invalid,
+select.is-valid,
+select.is-invalid {
+  background-image: none !important;
 }
 
 @media (max-width: 768px) {

@@ -1,8 +1,8 @@
-import { isValidUrl } from '../utils/validators'
+import { isValidUrl, isValidPassword } from '../utils/validators'
 import { createRandomLink, createCustomLink, deleteLink } from './../api/links'
 
 export function validateForm(formState) {
-  const { url, code, useCode } = formState
+  const { url, code, useCode, password, usePassword } = formState
 
   if (!url.trim()) {
     return {
@@ -23,6 +23,10 @@ export function validateForm(formState) {
       error: 'Digite um código customizado',
       validated: true,
     }
+  }
+
+  if (usePassword && !isValidPassword(password)) {
+    return { error: 'A senha deve ter entre 8 e 50 caracteres.' }
   }
 
   return null

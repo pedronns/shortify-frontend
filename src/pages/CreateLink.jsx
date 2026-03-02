@@ -105,204 +105,204 @@ export default function CreateLink({ onLinkCreated }) {
 	} = formState
 
 	const checkLabels = {
-		useCode: "Personalizar",
-		usePassword: "Protegido",
-		useQr: "QR Code",
+		useCode: "Personalizar URL",
+		usePassword: "Proteger com senha",
+		useQr: "Gerar QR Code",
 	}
 
 	return (
-		<Container className="main p-4 w-75 text-center">
-			<div className="d-flex justify-content-center align-items-center gap-2 mb-2">
-				<img src={logo} alt="logo" style={{ width: "50px" }} />
-				<h1 className="m-0 text-primary">Shortify</h1>
-			</div>
-			<p>Seu encurtador de links</p>
+		<Container className="w-75 mt-2 text-center">
+			<div className="shadow pb-5 rounded-4">
+				<div className="d-flex justify-content-center align-items-center gap-2 ">
+					<img src={logo} alt="logo" style={{ width: "50px" }} />
+					<h1 className="fw-bold">Shortify</h1>
+				</div>
+				<p>Seu encurtador de links</p>
 
-			<Form noValidate onSubmit={handleSubmit}>
-				{/* URL */}
-				<Row>
-					<Col xs={12} md={9} className="mx-auto">
-						<FormInput
-							label="URL do link"
-							info="O endereço completo do site que será encurtado."
-							placeholder="https://exemplo.com"
-							value={url}
-							ref={inputRef}
-							onChange={handleChange("url")}
-							feedback={
-								validated && !isValidPassword(password)
-									? "Insira uma URL válida"
-									: null
-							}
-							isValid={
-								validated &&
-								isValidUrl(url) &&
-								url.trim() !== ""
-							}
-							isInvalid={
-								validated &&
-								(!url.trim() || !isValidUrl(url))
-							}
-						>
-						</FormInput>
-					</Col>
-				</Row>
-				{/* switches */}
-				<Row className="mb-2">
-					<Col className="d-flex flex-wrap justify-content-center gap-4">
-						{["useCode", "usePassword", "useQr"].map((field) => (
-							<div
-								className="d-flex flex-column align-items-center"
-								key={field}
-							>
-								<Form.Check
-									type="switch"
-									checked={formState[field]}
-									onChange={handleSwitch(field)}
-								/>
-								<Form.Label className="mt-1 text-center">
-									{checkLabels[field]}
-								</Form.Label>
-							</div>
-						))}
-					</Col>
-				</Row>
-
-
-				{(useCode || usePassword) && (
-					<Row className="justify-content-center gap-4">
-						{/* code */}
-						{useCode && (
-							<Col xs={12} md={4}>
-								<FormInput
-									label="Código customizado"
-									info="Define o final do link encurtado [ex: short.ly/meu-codigo]"
-									placeholder="meu-codigo"
-									value={code}
-									onChange={handleChange("code")}
-									isInvalid={
-										validated && !isValidCode(code)
-									}
-									isValid={validated && isValidCode(code)}
-									feedback={
-										validated && !isValidCode(code)
-											? "O código deve ter 6-20 letras, números, '_' ou '-'."
-											: null
-									}
-								>
-								</FormInput>
-							</Col>
-						)}
-
-						{/* password */}
-						{usePassword && (
-							<Col xs={12} md={4}>
-								<FormInput
-									label="Senha"
-									info="Protege o link com uma senha de acesso"
-									type={showPassword ? "text" : "password"}
-									placeholder={showPassword ? "senhasegura" : "•••••••••••"}
-									value={password}
-									onChange={handleChange("password")}
-									isInvalid={validated && !isValidPassword(password)}
-									isValid={validated && isValidPassword(password)}
-									feedback={
-										validated && !isValidPassword(password)
-											? "A senha deve ter entre 8 e 50 caracteres."
-											: null
-									}
-									rightElement={
-										<span onClick={handleToggle} style={{ cursor: "pointer" }}>
-											{showPassword ? <FiEye className="eye-toggle" /> : <FiEyeOff className="eye-toggle" />}
-										</span>
-									}
-								/>
-
-							</Col>
-						)}
-					</Row>
-				)}
-
-				{/* qr code */}
-				{useQr && (
-					<Row className="mb-3">
-						<div className="d-flex justify-content-center align-items-center gap-1 mb-1">
-							<Form.Label className="mb-0">QR Code</Form.Label>
-
-							<OverlayTrigger
-								placement="top"
-								overlay={
-									<Tooltip>
-										Escolha as cores do QR Code que será
-										gerado com o link
-									</Tooltip>
+				<Form noValidate onSubmit={handleSubmit}>
+					{/* URL */}
+					<Row>
+						<Col xs={12} md={9} className="mx-auto">
+							<FormInput
+								label="URL do link"
+								info="O endereço completo do site que será encurtado."
+								placeholder="https://exemplo.com"
+								value={url}
+								ref={inputRef}
+								onChange={handleChange("url")}
+								feedback={
+									validated && !isValidPassword(password)
+										? "Insira uma URL válida"
+										: null
+								}
+								isValid={
+									validated &&
+									isValidUrl(url) &&
+									url.trim() !== ""
+								}
+								isInvalid={
+									validated &&
+									(!url.trim() || !isValidUrl(url))
 								}
 							>
-								<span
-									role="button"
-									tabIndex={0}
-									className="text-primary mb-1"
-									style={{ cursor: "pointer" }}
-								>
-									<FiInfo size={16} />
-								</span>
-							</OverlayTrigger>
-						</div>
-						<Col xs={12} md={4} className="mx-auto">
-							<Row>
-								{[
-									{
-										label: "Cor #1",
-										value: mainColor,
-										setter: "mainColor",
-									},
-									{
-										label: "Cor #2",
-										value: secondaryColor,
-										setter: "secondaryColor",
-									},
-								].map(({ label, value, setter }) => (
-									<Col
-										xs={12}
-										sm={6}
-										className="text-center"
-										key={setter}
-									>
-										<Form.Label>{label}</Form.Label>
-										<Form.Control
-											type="color"
-											className="w-75 mx-auto"
-											value={value}
-											onChange={handleChange(setter)}
-										/>
-									</Col>
-								))}
-							</Row>
+							</FormInput>
 						</Col>
 					</Row>
-				)}
+					{/* switches */}
+					<Row className="mb-2">
+						<Col className="d-flex flex-wrap justify-content-center gap-4">
+							{["useCode", "usePassword", "useQr"].map((field) => (
+								<div
+									className="d-flex flex-column align-items-center"
+									key={field}
+								>
+									<Form.Check
+										type="switch"
+										checked={formState[field]}
+										onChange={handleSwitch(field)}
+									/>
+									<Form.Label className="mt-1 text-center">
+										{checkLabels[field]}
+									</Form.Label>
+								</div>
+							))}
+						</Col>
+					</Row>
 
-				<Row>
-					<Col className="d-flex justify-content-center">
-						<Button
-							type="submit"
-							className="btn-lg"
-							disabled={loading}
-						>
-							{loading ? "Encurtando..." : "Encurtar"}
-						</Button>
-					</Col>
-				</Row>
-			</Form>
 
-			<ResultModal
-				link={result}
-				useQr={useQr}
-				onClose={handleClose}
-				error={result?.error}
-			/>
+					{(useCode || usePassword) && (
+						<Row className="justify-content-center gap-4">
+							{/* code */}
+							{useCode && (
+								<Col xs={12} md={4}>
+									<FormInput
+										label="Código customizado"
+										info="Define o final do link encurtado [ex: short.ly/meu-codigo]"
+										placeholder="meu-codigo"
+										value={code}
+										onChange={handleChange("code")}
+										isInvalid={
+											validated && !isValidCode(code)
+										}
+										feedback={
+											validated && !isValidCode(code)
+												? "O código deve ter 6-20 letras, números, '_' ou '-'."
+												: null
+										}
+									>
+									</FormInput>
+								</Col>
+							)}
 
-			<CodeTakenModal result={result} code={formState.code} onClose={handleClose} />
+							{/* password */}
+							{usePassword && (
+								<Col xs={12} md={4}>
+									<FormInput
+										label="Senha"
+										info="Protege o link com uma senha de acesso"
+										type={showPassword ? "text" : "password"}
+										placeholder={showPassword ? "senhasegura" : "•••••••••••"}
+										value={password}
+										onChange={handleChange("password")}
+										isInvalid={validated && !isValidPassword(password)}
+										feedback={
+											validated && !isValidPassword(password)
+												? "A senha deve ter entre 8 e 50 caracteres."
+												: null
+										}
+										rightElement={
+											<span onClick={handleToggle} style={{ cursor: "pointer" }}>
+												{showPassword ? <FiEye className="eye-toggle" /> : <FiEyeOff className="eye-toggle" />}
+											</span>
+										}
+									/>
+
+								</Col>
+							)}
+						</Row>
+					)}
+
+					{/* qr code */}
+					{useQr && (
+						<Row className="mb-3">
+							<div className="d-flex justify-content-center align-items-center gap-1 mb-1">
+								<Form.Label className="mb-0">QR Code</Form.Label>
+
+								<OverlayTrigger
+									placement="top"
+									overlay={
+										<Tooltip>
+											Escolha as cores do QR Code que será
+											gerado com o link
+										</Tooltip>
+									}
+								>
+									<span
+										role="button"
+										tabIndex={0}
+										className="text-primary mb-1"
+										style={{ cursor: "pointer" }}
+									>
+										<FiInfo size={16} />
+									</span>
+								</OverlayTrigger>
+							</div>
+							<Col xs={12} md={4} className="mx-auto">
+								<Row>
+									{[
+										{
+											label: "Cor #1",
+											value: mainColor,
+											setter: "mainColor",
+										},
+										{
+											label: "Cor #2",
+											value: secondaryColor,
+											setter: "secondaryColor",
+										},
+									].map(({ label, value, setter }) => (
+										<Col
+											xs={12}
+											sm={6}
+											className="text-center"
+											key={setter}
+										>
+											<Form.Label>{label}</Form.Label>
+											<Form.Control
+												type="color"
+												className="w-50 mx-auto"
+												value={value}
+												onChange={handleChange(setter)}
+											/>
+										</Col>
+									))}
+								</Row>
+							</Col>
+						</Row>
+					)}
+
+					<Row>
+						<Col className="d-flex justify-content-center">
+							<Button
+								type="submit"
+								className="btn-lg fw-semibold"
+								disabled={loading}
+							>
+								{loading ? "Encurtando..." : "Encurtar"}
+							</Button>
+						</Col>
+					</Row>
+				</Form>
+
+				<ResultModal
+					link={result}
+					useQr={useQr}
+					onClose={handleClose}
+					error={result?.error}
+				/>
+
+				<CodeTakenModal result={result} code={formState.code} onClose={handleClose} />
+			</div>
 		</Container>
 	)
 }

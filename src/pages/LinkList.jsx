@@ -65,7 +65,7 @@ export default function LinkList({ links, onLinkDeleted }) {
 
       <div className="table-wrapper">
         <Table striped bordered hover variant="dark" className="">
-          <thead>
+          <thead className="rounded">
             <tr>
               <th >URL</th>
               <th >Link Criado</th>

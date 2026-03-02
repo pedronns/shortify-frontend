@@ -19,7 +19,7 @@ function Header() {
             alt="Shortify logo"
           />
         </Navbar.Brand>
-        <Navbar.Brand href="/">Shortify</Navbar.Brand>
+        <Navbar.Brand className='fw-bold' href="/">Shortify</Navbar.Brand>
         <Navbar.Toggle aria-controls="" />
         <Navbar.Collapse id="">
           <Nav className="">

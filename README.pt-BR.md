@@ -2,6 +2,8 @@
 
 Interface web moderna e responsiva para o encurtador de links **Shortify**, desenvolvida com **React**, **Vite** e **Bootstrap**.
 
+Live demo: https://shortify-6s8t.vercel.app/
+
 ---
 
 ## Funcionalidades

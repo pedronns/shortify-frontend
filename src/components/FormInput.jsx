@@ -1,9 +1,9 @@
-import { Form, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { Form, Row, OverlayTrigger, Tooltip } from "react-bootstrap"
 import { FiInfo } from "react-icons/fi"
-import { cloneElement } from "react"
+import { cloneElement, useRef } from "react"
+
 
 export default function FormInput({
-	colSm = 12,
 	type,
 	label,
 	info,
@@ -16,6 +16,10 @@ export default function FormInput({
 	isValid,
 	rightElement
 }) {
+
+	const inputRef = useRef(null)
+
+	
 	return (
 		<Form.Group as={Row} className="mb-3 justify-content-center">
 			<div className="d-flex justify-content-center align-items-center gap-1 mb-1">
@@ -48,18 +52,24 @@ export default function FormInput({
 			<div className="position-relative">
 
 				<Form.Control
+					ref={inputRef}
 					type={type}
 					placeholder={placeholder}
 					value={value}
 					onChange={onChange}
 					required
-					autoFocus // teste
 					isInvalid={isInvalid}
 					isValid={isValid}
 				/>
 
 				{rightElement && (
-					<div className="position-absolute top-0 end-0 mt-2 pe-3 me-2">
+					<div className="position-absolute top-0 end-0 mt-2 pe-3 me-2"
+						onMouseDown={(e) => {
+							e.preventDefault()
+						}}
+						onClick={(e) => {
+							inputRef.current.focus()
+						}}>
 						{rightElement}
 					</div>
 				)}

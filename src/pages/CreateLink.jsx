@@ -104,6 +104,20 @@ export default function CreateLink({ onLinkCreated }) {
 		useQr,
 	} = formState
 
+
+	const colorInputs = [
+		{
+			label: "Cor #1",
+			value: mainColor,
+			setter: "mainColor",
+		},
+		{
+			label: "Cor #2",
+			value: secondaryColor,
+			setter: "secondaryColor",
+		},
+	]
+
 	const checkLabels = {
 		useCode: "Personalizar URL",
 		usePassword: "Proteger com senha",
@@ -114,7 +128,7 @@ export default function CreateLink({ onLinkCreated }) {
 		<Container className="w-75 mt-2 text-center">
 			<div className="shadow pb-5 rounded-4">
 				<div className="d-flex justify-content-center align-items-center gap-2 ">
-					<img src={logo} alt="logo" style={{ width: "50px" }} />
+					<img src={logo} alt="logo" style={{ width: "50px" }} className="mb-2" />
 					<h1 className="fw-bold">Shortify</h1>
 				</div>
 				<p>Seu encurtador de links</p>
@@ -212,7 +226,7 @@ export default function CreateLink({ onLinkCreated }) {
 										}
 										rightElement={
 											<span onClick={handleToggle} style={{ cursor: "pointer" }}>
-												{showPassword ? <FiEye className="eye-toggle" /> : <FiEyeOff className="eye-toggle" />}
+												{showPassword ? <FiEye className="eye-toggle active" /> : <FiEyeOff className="eye-toggle" />}
 											</span>
 										}
 									/>
@@ -249,18 +263,7 @@ export default function CreateLink({ onLinkCreated }) {
 							</div>
 							<Col xs={12} md={4} className="mx-auto">
 								<Row>
-									{[
-										{
-											label: "Cor #1",
-											value: mainColor,
-											setter: "mainColor",
-										},
-										{
-											label: "Cor #2",
-											value: secondaryColor,
-											setter: "secondaryColor",
-										},
-									].map(({ label, value, setter }) => (
+									{colorInputs.map(({ label, value, setter }) => (
 										<Col
 											xs={12}
 											sm={6}

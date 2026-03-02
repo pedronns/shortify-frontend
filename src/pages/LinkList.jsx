@@ -85,7 +85,7 @@ export default function LinkList({ links, onLinkDeleted }) {
 
                 return (
                   <tr key={item.code}>
-                    <td>{item.url}</td>
+                    <td className="text-truncate" style={{ maxWidth: '250px' }}>{item.url}</td>
                     <td>
                       <a
                         href={shortUrl}
@@ -129,7 +129,8 @@ export default function LinkList({ links, onLinkDeleted }) {
         </div>
       }
 
-      <ToastContainer position="bottom-end">
+      <ToastContainer position="bottom-end" className="p-3">
+
         <Toast
           show={showToast}
           onClose={() => setShowToast(false)}
@@ -139,7 +140,7 @@ export default function LinkList({ links, onLinkDeleted }) {
           className=""
           style={{ width: "auto", minWidth: "200px", maxWidth: "300px" }}
         >
-          <Toast.Body className="text-white w-100 fw-semibold">
+          <Toast.Body className="text-white fw-semibold">
             Link excluído com sucesso!
           </Toast.Body>
         </Toast>

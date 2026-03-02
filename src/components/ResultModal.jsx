@@ -10,17 +10,18 @@ import { createQrCode } from "../api/qrCode"
 import "../App.css"
 
 const ResultModal = ({ link, useQr, onClose, error }) => {
-	if (!link || error) return null
 	const show = !!link && !error
-
+	
 	const origin = new URL(FRONTEND_URL).origin
 	const host = new URL(FRONTEND_URL).host
-
+	
 	const fullShortUrl = link ? `${origin}/${link.code}` : ""
 	const displayShortUrl = link ? `${host}/${link.code}` : ""
-
+	
+	if (!link || error) return null
 	const [qrCode, setQrCode] = useState(null)
 	const [showToast, setShowToast] = useState(false)
+	
 
 	useEffect(() => {
 		if (!show || !useQr) return
@@ -30,7 +31,7 @@ const ResultModal = ({ link, useQr, onClose, error }) => {
 		async function loadQr() {
 			try {
 				const base64 = await createQrCode(
-					shortUrl,
+					fullShortUrl,
 					link.mainColor,
 					link.secondaryColor,
 					{ signal: controller.signal },
@@ -69,8 +70,8 @@ const ResultModal = ({ link, useQr, onClose, error }) => {
 			</Modal.Header>
 
 			<Modal.Body className="text-center">
-				<p className="mb-2" style={{ overflow: "hidden" }}>
-					<strong>Original:</strong> {link.url}
+				<p className="text-truncate">
+					<strong >Original:</strong> {link.url}
 				</p>
 
 				<p className="mb-2">
@@ -81,7 +82,7 @@ const ResultModal = ({ link, useQr, onClose, error }) => {
 				</p>
 
 				{link.protected && (
-					<p className="text-primary fw-bold">
+					<p className="text-danger fw-bold">
 						Este link está protegido por senha
 					</p>
 				)}

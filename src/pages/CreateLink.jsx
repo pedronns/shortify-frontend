@@ -22,6 +22,7 @@ export default function CreateLink({ onLinkCreated }) {
 		code: "",
 		mainColor: "#000000",
 		secondaryColor: "#ffffff",
+		image: '',
 		loading: false,
 		validated: false,
 		result: null,
@@ -95,6 +96,7 @@ export default function CreateLink({ onLinkCreated }) {
 		code,
 		mainColor,
 		secondaryColor,
+		image,
 		result,
 		validated,
 		loading,
@@ -262,7 +264,7 @@ export default function CreateLink({ onLinkCreated }) {
 								</OverlayTrigger>
 							</div>
 							<Col xs={12} md={4} className="mx-auto">
-								<Row>
+								<Row className='mb-2'>
 									{colorInputs.map(({ label, value, setter }) => (
 										<Col
 											xs={12}
@@ -279,7 +281,22 @@ export default function CreateLink({ onLinkCreated }) {
 											/>
 										</Col>
 									))}
-								</Row>
+								</Row >
+								{/* optional logo */}
+								<FormInput
+									type={'url'}
+									label={'URL da logo (Opcional)'}
+									required={false}
+									info={'Link da logo que ficará no centro do QR Code'}
+									placeholder={'https://site/logo.png'}
+									feedback={'Insira uma URL válida'}
+									onChange={handleChange("image")}
+									isInvalid={
+										validated &&
+										image?.trim() !== "" &&
+										!isValidUrl(image)
+									}
+								/>
 							</Col>
 						</Row>
 					)}
@@ -300,6 +317,7 @@ export default function CreateLink({ onLinkCreated }) {
 				<ResultModal
 					link={result}
 					useQr={useQr}
+					image={image}
 					onClose={handleClose}
 					error={result?.error}
 				/>

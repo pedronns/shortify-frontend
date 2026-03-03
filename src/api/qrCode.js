@@ -1,14 +1,29 @@
-export async function createQrCode(str, main, secondary, options = {}) {
+export async function createQrCode(
+  str,
+  main,
+  secondary,
+  image,
+  options = {}
+) {
   const { signal } = options
 
-  const cleanedMain = main.startsWith('#') ? main.slice(1) : main
-  const cleanedSecondary = secondary.startsWith('#')
-    ? secondary.slice(1)
-    : secondary
+  const normalizeColor = (color) =>
+    color?.startsWith('#') ? color.slice(1) : color
 
-  const url = `https://quickchart.io/qr?text=${encodeURIComponent(
-    str,
-  )}&margin=1&size=150&dark=${cleanedMain}&light=${cleanedSecondary}&format=base64`
+  const params = new URLSearchParams({
+    text: str,
+    margin: '1',
+    size: '150',
+    dark: normalizeColor(main),
+    light: normalizeColor(secondary),
+    format: 'base64',
+  })
+
+  if (image) {
+    params.append('centerImageUrl', image)
+  }
+
+  const url = `https://quickchart.io/qr?${params.toString()}`
 
   const res = await fetch(url, { signal })
 
@@ -17,6 +32,5 @@ export async function createQrCode(str, main, secondary, options = {}) {
     throw new Error(`Error generating QR: ${errorMessage}`)
   }
 
-  const base64 = await res.text()
-  return base64
+  return await res.text()
 }

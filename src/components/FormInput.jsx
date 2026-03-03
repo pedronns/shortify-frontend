@@ -2,7 +2,6 @@ import { Form, Row, OverlayTrigger, Tooltip } from "react-bootstrap"
 import { FiInfo } from "react-icons/fi"
 import { cloneElement, useRef } from "react"
 
-
 export default function FormInput({
 	type,
 	label,
@@ -12,6 +11,7 @@ export default function FormInput({
 	children,
 	value,
 	onChange,
+	required = true,
 	isInvalid,
 	isValid,
 	rightElement
@@ -52,12 +52,13 @@ export default function FormInput({
 			<div className="position-relative">
 
 				<Form.Control
+					className="w-75 mx-auto"
 					ref={inputRef}
 					type={type}
 					placeholder={placeholder}
 					value={value}
 					onChange={onChange}
-					required
+					required={required}
 					isInvalid={isInvalid}
 					isValid={isValid}
 				/>

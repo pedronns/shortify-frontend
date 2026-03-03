@@ -9,7 +9,7 @@ import { createQrCode } from "../api/qrCode"
 
 import "../App.css"
 
-const ResultModal = ({ link, useQr, onClose, error }) => {
+const ResultModal = ({ link, useQr, image, onClose, error }) => {
 	const show = !!link && !error
 	
 	const origin = new URL(FRONTEND_URL).origin
@@ -34,6 +34,7 @@ const ResultModal = ({ link, useQr, onClose, error }) => {
 					fullShortUrl,
 					link.mainColor,
 					link.secondaryColor,
+					image,
 					{ signal: controller.signal },
 				)
 
@@ -44,7 +45,7 @@ const ResultModal = ({ link, useQr, onClose, error }) => {
 				}
 
 				console.error("Erro ao gerar QR Code", {
-					shortUrl,
+					fullShortUrl,
 					mainColor: link.mainColor,
 					secondaryColor: link.secondaryColor,
 					error: err,

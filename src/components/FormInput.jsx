@@ -64,7 +64,7 @@ export default function FormInput({
 				/>
 
 				{rightElement && (
-					<div className="position-absolute top-0 end-0 mt-2 pe-3 me-2"
+					<div className="position-absolute top-0 end-0 mt-2 pe-5 me-lg-4"
 						onMouseDown={(e) => {
 							e.preventDefault()
 						}}

@@ -19,7 +19,7 @@ export default function FormInput({
 
 	const inputRef = useRef(null)
 
-	
+
 	return (
 		<Form.Group as={Row} className="mb-3 justify-content-center">
 			<div className="d-flex justify-content-center align-items-center gap-1 mb-1">
@@ -64,7 +64,12 @@ export default function FormInput({
 				/>
 
 				{rightElement && (
-					<div className="position-absolute top-0 end-0 mt-2 pe-5 me-lg-4"
+					<div className="
+						position-absolute top-0 end-0 mt-2
+						pe-lg-5 me-lg-5
+						pe-md-4 me-md-5
+						pe-sm-3 me-sm-5
+						pe-5 me-3"
 						onMouseDown={(e) => {
 							e.preventDefault()
 						}}

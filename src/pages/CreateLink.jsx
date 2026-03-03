@@ -212,7 +212,7 @@ export default function CreateLink({ onLinkCreated }) {
 
 							{/* password */}
 							{usePassword && (
-								<Col xs={12} md={4}>
+								<Col sm={12} md={8} lg={6}>
 									<FormInput
 										label="Senha"
 										info="Protege o link com uma senha de acesso"
